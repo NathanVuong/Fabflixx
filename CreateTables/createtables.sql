@@ -26,7 +26,7 @@ CREATE TABLE genres (
 
 CREATE TABLE genres_in_movies (
     genreId INT NOT NULL,
-    movieID VARCHAR(10) NOT NULL,
+    movieId VARCHAR(10) NOT NULL,
     FOREIGN KEY (genreId) REFERENCES genres(id),
     FOREIGN KEY (movieId) REFERENCES movies(id)
 );
