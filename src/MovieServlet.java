@@ -102,11 +102,13 @@ public class MovieServlet extends HttpServlet {
 
             // Second JSON object will have all genres
             JsonObject jsonObjectTwo = new JsonObject();
+            int genreCount = 1;
             while (rs.next()) {
                 String genre = rs.getString("genre");
                 String genre_id = rs.getString("genre_id");
-                jsonObjectTwo.addProperty("genre", genre);
-                jsonObjectTwo.addProperty("genre_id", genre_id);
+                jsonObjectTwo.addProperty("genre_" + Integer.toString(genreCount), genre);
+                jsonObjectTwo.addProperty("genre_id_" + Integer.toString(genreCount), genre_id);
+                genreCount++;
             }
             jsonArray.add(jsonObjectTwo);
             rs.close();
@@ -117,13 +119,15 @@ public class MovieServlet extends HttpServlet {
             statement.setString(1, id);
             rs = statement.executeQuery();
 
-            // Second JSON object will have all genres
+            // Third JSON object will have all stars
             JsonObject jsonObjectThree = new JsonObject();
+            int starCount = 1;
             while (rs.next()) {
                 String star = rs.getString("star");
                 String star_id = rs.getString("star_id");
-                jsonObjectThree.addProperty("star", star);
-                jsonObjectThree.addProperty("star_id", star_id);
+                jsonObjectThree.addProperty("star_" + Integer.toString(starCount), star);
+                jsonObjectThree.addProperty("star_id_" + Integer.toString(starCount), star_id);
+                starCount++;
             }
             jsonArray.add(jsonObjectThree);
             rs.close();
