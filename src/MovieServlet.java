@@ -58,7 +58,7 @@ public class MovieServlet extends HttpServlet {
             // Construct a queries with parameters represented by "?"
             String queryMovie = "SELECT movies.title, movies.director, movies.year FROM movies WHERE movies.id = ?;";
             String queryRating = "SELECT ratings.rating FROM ratings WHERE ratings.movieId = ?;";
-            String queryGenres = "SELECT genres.name FROM genres JOIN genres_in_movies ON genres_in_movies.genreId = genres.id WHERE genres_in_movies.movieId = ?;";
+            String queryGenres = "SELECT genres.name, genre.id FROM genres JOIN genres_in_movies ON genres_in_movies.genreId = genres.id WHERE genres_in_movies.movieId = ?;";
             String queryStars = "SELECT stars.name, stars.id FROM stars JOIN stars_in_movies ON stars_in_movies.starId = stars.id WHERE stars_in_movies.movieId = ?;";
 
             // Declare our statement
@@ -104,8 +104,8 @@ public class MovieServlet extends HttpServlet {
             JsonObject jsonObjectTwo = new JsonObject();
             int genreCount = 0;
             while (rs.next()) {
-                String genre = rs.getString("genre");
-                String genre_id = rs.getString("genre_id");
+                String genre = rs.getString("name");
+                String genre_id = rs.getString("id");
                 jsonObjectTwo.addProperty("genre_" + Integer.toString(genreCount), genre);
                 jsonObjectTwo.addProperty("genre_id_" + Integer.toString(genreCount), genre_id);
                 genreCount++;
@@ -124,8 +124,8 @@ public class MovieServlet extends HttpServlet {
             JsonObject jsonObjectThree = new JsonObject();
             int starCount = 0;
             while (rs.next()) {
-                String star = rs.getString("star");
-                String star_id = rs.getString("star_id");
+                String star = rs.getString("name");
+                String star_id = rs.getString("id");
                 jsonObjectThree.addProperty("star_" + Integer.toString(starCount), star);
                 jsonObjectThree.addProperty("star_id_" + Integer.toString(starCount), star_id);
                 starCount++;

@@ -1,5 +1,5 @@
 function handleMovieResult(resultData) {
-    console.log("handleStarResult: populating star table from resultData");
+    console.log("handleMovieResult: populating star table from resultData");
 
     // Populate the star table
     // Find the empty table body by id "star_table_body"
@@ -45,6 +45,6 @@ Once this .js is loaded, following scripts will be executed by the browser
 jQuery.ajax({
     dataType: "json", // Setting return data type
     method: "GET", // Setting request method
-    url: "api/movieList", // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "api/single-movie", // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleMovieResult(resultData) // Setting callback function to handle data returned successfully by the StarsServlet
 });

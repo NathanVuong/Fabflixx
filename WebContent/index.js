@@ -1,5 +1,5 @@
 function handleMovieListResult(resultData) {
-    console.log("handleStarResult: populating star table from resultData");
+    console.log("handleMovieListResult: populating star table from resultData");
 
     // Populate the star table
     // Find the empty table body by id "star_table_body"

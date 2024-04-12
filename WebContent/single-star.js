@@ -8,13 +8,18 @@ function handleStarResult(resultData) {
     // Concatenate the html tags with resultData jsonObject
     let rowHTML = "";
     rowHTML += "<tr>";
-    //title
-    rowHTML += "<th>" + resultData[0]["name"] + "</th>";
-    //year
-    rowHTML += "<th>" + resultData[0]["year"] + "</th>";
-    //director
-    rowHTML += "<th>" + resultData[0]["movies"] + "</th>";
-    rowHTML += "</tr>";
+    //name
+    rowHTML += "<th>" + resultData[0]["star_name"] + "</th>";
+    //year of birth
+    rowHTML += "<th>" + resultData[0]["star_birth_year"] + "</th>";
+    //movies
+    let movie_count = Number(resultData[1]["movie_count"]);
+    for (let i = 0; i < movie_count; i++) {
+        rowHTML += "<th>" + '<a href="single-movie.html?id=' +
+            resultData[1]['movie_id_' + i] + '">'
+            + resultData[1]["movie_" + i] +
+            '</a>' + "</th>";
+    }
 
     // Append the row created to the table body, which will refresh the page
     starTableBodyElement.append(rowHTML)
@@ -29,6 +34,6 @@ Once this .js is loaded, following scripts will be executed by the browser
 jQuery.ajax({
     dataType: "json", // Setting return data type
     method: "GET", // Setting request method
-    url: "api/movieList", // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "api/single-star", // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleStarResult(resultData) // Setting callback function to handle data returned successfully by the StarsServlet
 });
