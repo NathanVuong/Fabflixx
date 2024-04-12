@@ -110,7 +110,7 @@ public class MovieServlet extends HttpServlet {
                 jsonObjectTwo.addProperty("genre_id_" + Integer.toString(genreCount), genre_id);
                 genreCount++;
             }
-            jsonObjectTwo.addProperty("genre_count", String(genreCount));
+            jsonObjectTwo.addProperty("genre_count", Integer.toString(genreCount));
             jsonArray.add(jsonObjectTwo);
             rs.close();
             statement.close();
@@ -130,11 +130,13 @@ public class MovieServlet extends HttpServlet {
                 jsonObjectThree.addProperty("star_id_" + Integer.toString(starCount), star_id);
                 starCount++;
             }
-            jsonObjectThree.addProperty("genre_count", String(starCount));
+            jsonObjectThree.addProperty("genre_count", Integer.toString(starCount));
             jsonArray.add(jsonObjectThree);
             rs.close();
             statement.close();
 
+            // Log to localhost log
+            request.getServletContext().log("getting " + jsonArray.size() + " results");
             // Write JSON string to output
             out.write(jsonArray.toString());
             // Set response status to 200 (OK)

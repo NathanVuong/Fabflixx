@@ -97,11 +97,13 @@ public class StarServlet extends HttpServlet {
                 jsonObjectTwo.addProperty("movie_id_" + Integer.toString(movieCount), movie_id);
                 movieCount++;
             }
-            jsonObjectTwo.addProperty("movie_count", String(movieCount));
+            jsonObjectTwo.addProperty("movie_count", Integer.toString(movieCount));
             jsonArray.add(jsonObjectTwo);
             rs.close();
             statement.close();
 
+            // Log to localhost log
+            request.getServletContext().log("getting " + jsonArray.size() + " results");
             // Write JSON string to output
             out.write(jsonArray.toString());
             // Set response status to 200 (OK)

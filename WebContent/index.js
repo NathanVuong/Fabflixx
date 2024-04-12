@@ -13,7 +13,7 @@ function handleMovieListResult(resultData) {
         rowHTML += "<tr>";
         //title
         rowHTML += "<th>" +
-            '<a href="single-movie.html?id=' + resultData[i]['star_id'] + '">'
+            '<a href="single-movie.html?id=' + resultData[i]['movie_id'] + '">'
             + resultData[i]["movie_title"] +
             '</a>' + "</th>";
         //year

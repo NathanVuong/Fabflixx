@@ -1,3 +1,19 @@
+function getParameterByName(target) {
+    // Get request URL
+    let url = window.location.href;
+    // Encode target parameter name to url encoding
+    target = target.replace(/[\[\]]/g, "\\$&");
+
+    // Ues regular expression to find matched parameter value
+    let regex = new RegExp("[?&]" + target + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+
+    // Return the decoded parameter value
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 function handleStarResult(resultData) {
     console.log("handleStarResult: populating star table from resultData");
 
@@ -30,10 +46,13 @@ function handleStarResult(resultData) {
 Once this .js is loaded, following scripts will be executed by the browser
 */
 
+// Get id from URL
+let starId = getParameterByName('id');
+
 // Makes the HTTP GET request and registers on success callback function handleStarResult
 jQuery.ajax({
     dataType: "json", // Setting return data type
     method: "GET", // Setting request method
-    url: "api/single-star", // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "api/single-star?id=" + starId, // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleStarResult(resultData) // Setting callback function to handle data returned successfully by the StarsServlet
 });
