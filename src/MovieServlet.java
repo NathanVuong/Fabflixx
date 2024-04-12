@@ -58,7 +58,7 @@ public class MovieServlet extends HttpServlet {
             // Construct a queries with parameters represented by "?"
             String queryMovie = "SELECT movies.title, movies.director, movies.year FROM movies WHERE movies.id = ?;";
             String queryRating = "SELECT ratings.rating FROM ratings WHERE ratings.movieId = ?;";
-            String queryGenres = "SELECT genres.name, genre.id FROM genres JOIN genres_in_movies ON genres_in_movies.genreId = genres.id WHERE genres_in_movies.movieId = ?;";
+            String queryGenres = "SELECT genres.name, genres.id FROM genres JOIN genres_in_movies ON genres_in_movies.genreId = genres.id WHERE genres_in_movies.movieId = ?;";
             String queryStars = "SELECT stars.name, stars.id FROM stars JOIN stars_in_movies ON stars_in_movies.starId = stars.id WHERE stars_in_movies.movieId = ?;";
 
             // Declare our statement
