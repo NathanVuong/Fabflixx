@@ -31,7 +31,6 @@ function handleMovieListResult(resultData) {
         //rating
         rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";
         rowHTML += "</tr>";
-
         // Append the row created to the table body, which will refresh the page
         starTableBodyElement.append(rowHTML);
     }

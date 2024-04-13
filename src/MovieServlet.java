@@ -36,12 +36,10 @@ public class MovieServlet extends HttpServlet {
      * response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         response.setContentType("application/json"); // Response mime type
 
         // Retrieve parameter id from url request.
         String id = request.getParameter("id");
-
         // The log message can be found in localhost log
         request.getServletContext().log("getting id: " + id);
 
@@ -51,29 +49,32 @@ public class MovieServlet extends HttpServlet {
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
             // Get a connection from dataSource
-
             // JSON array
             JsonArray jsonArray = new JsonArray();
 
             // Construct a queries with parameters represented by "?"
-            String queryMovie = "SELECT movies.title, movies.director, movies.year FROM movies WHERE movies.id = ?;";
-            String queryRating = "SELECT ratings.rating FROM ratings WHERE ratings.movieId = ?;";
-            String queryGenres = "SELECT genres.name, genres.id FROM genres JOIN genres_in_movies ON genres_in_movies.genreId = genres.id WHERE genres_in_movies.movieId = ?;";
-            String queryStars = "SELECT stars.name, stars.id FROM stars JOIN stars_in_movies ON stars_in_movies.starId = stars.id WHERE stars_in_movies.movieId = ?;";
-
+            String queryMovie = "SELECT DISTINCT movies.title, movies.director, movies.year FROM movies WHERE movies.id = ?";
+            String queryRating = "SELECT DISTINCT ratings.rating FROM ratings WHERE ratings.movieId = ?";
+            String queryGenres = "SELECT DISTINCT genres.name, genres.id FROM genres JOIN genres_in_movies ON genres_in_movies.genreId = genres.id WHERE genres_in_movies.movieId = ?";
+            String queryStars = "SELECT DISTINCT stars.name, stars.id FROM stars JOIN stars_in_movies ON stars_in_movies.starId = stars.id WHERE stars_in_movies.movieId = ?";
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(queryMovie);
-
             // Set the parameter represented by "?" in the query to the id we get from url,
             // num 1 indicates the first "?" in the query
             statement.setString(1, id);
 
             // Perform the first query to get title, director, and year
             ResultSet rs = statement.executeQuery();
-            rs.first();
-            String movie_title = rs.getString("title");
-            String movie_director = rs.getString("director");
-            String movie_year = rs.getString("year");
+
+            String movie_title = "";
+            String movie_director = "";
+            String movie_year = "";
+
+            while (rs.next()) {
+                movie_title = rs.getString("title");
+                movie_director = rs.getString("director");
+                movie_year = rs.getString("year");
+            }
 
             // Close it
             rs.close();
@@ -83,7 +84,10 @@ public class MovieServlet extends HttpServlet {
             statement = conn.prepareStatement(queryRating);
             statement.setString(1, id);
             rs = statement.executeQuery();
-            String movie_rating = rs.getString("rating");
+            String movie_rating = "";
+            while (rs.next()) {
+                movie_rating = rs.getString("rating");
+            }
             rs.close();
             statement.close();
 
@@ -130,14 +134,12 @@ public class MovieServlet extends HttpServlet {
                 jsonObjectThree.addProperty("star_id_" + Integer.toString(starCount), star_id);
                 starCount++;
             }
-            jsonObjectThree.addProperty("genre_count", Integer.toString(starCount));
+            jsonObjectThree.addProperty("star_count", Integer.toString(starCount));
             jsonArray.add(jsonObjectThree);
             rs.close();
             statement.close();
-
-            // Log to localhost log
-            request.getServletContext().log("getting " + jsonArray.size() + " results");
             // Write JSON string to output
+
             out.write(jsonArray.toString());
             // Set response status to 200 (OK)
             response.setStatus(200);

@@ -38,7 +38,7 @@ function handleStarResult(resultData) {
     }
 
     // Append the row created to the table body, which will refresh the page
-    starTableBodyElement.append(rowHTML)
+    starTableBodyElement.append(rowHTML);
 }
 
 

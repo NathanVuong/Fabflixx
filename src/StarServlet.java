@@ -16,7 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 // Declaring a WebServlet called SingleStarServlet, which maps to url "/api/single-star"
-@WebServlet(name = "MovieServlet", urlPatterns = "/api/single-star")
+@WebServlet(name = "StarServlet", urlPatterns = "/api/single-star")
 public class StarServlet extends HttpServlet {
     private static final long serialVersionUID = 2L;
 
@@ -42,9 +42,6 @@ public class StarServlet extends HttpServlet {
         // Retrieve parameter id from url request.
         String id = request.getParameter("id");
 
-        // The log message can be found in localhost log
-        request.getServletContext().log("getting id: " + id);
-
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
 
@@ -56,8 +53,8 @@ public class StarServlet extends HttpServlet {
             JsonArray jsonArray = new JsonArray();
 
             // Construct a queries with parameters represented by "?"
-            String queryStars = "SELECT stars.name, stars.birthYear FROM stars WHERE stars.id = ?;";
-            String queryMovies = "SELECT movies.title, movies.id FROM movies JOIN stars_in_movies ON stars_in_movies.moviesId = movies.id WHERE stars_in_movies.starsId = ?;";
+            String queryStars = "SELECT DISTINCT stars.name, stars.birthYear FROM stars WHERE stars.id = ?;";
+            String queryMovies = "SELECT DISTINCT movies.title, movies.id FROM movies JOIN stars_in_movies ON stars_in_movies.movieId = movies.id WHERE stars_in_movies.starId = ?;";
 
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(queryStars);
@@ -68,10 +65,12 @@ public class StarServlet extends HttpServlet {
 
             // Perform the first query to get name and birth year
             ResultSet rs = statement.executeQuery();
-            rs.first();
-            String star_name = rs.getString("name");
-            String star_birth_year= rs.getString("birthYear");
-
+            String star_name = "";
+            String star_birth_year = "";
+            while (rs.next()) {
+                star_name = rs.getString("name");
+                star_birth_year = rs.getString("birthYear");
+            }
             // Close it
             rs.close();
             statement.close();
@@ -79,6 +78,9 @@ public class StarServlet extends HttpServlet {
             // Create first JSON object with this
             JsonObject jsonObjectOne = new JsonObject();
             jsonObjectOne.addProperty("star_name", star_name);
+            if (star_birth_year == null) {
+                star_birth_year = "N/A";
+            }
             jsonObjectOne.addProperty("star_birth_year", star_birth_year);
             jsonArray.add(jsonObjectOne);
 
@@ -86,12 +88,13 @@ public class StarServlet extends HttpServlet {
             statement = conn.prepareStatement(queryMovies);
             statement.setString(1, id);
             rs = statement.executeQuery();
+            System.out.println(jsonArray.toString());
 
             // Second JSON object will have all movies star was in
             JsonObject jsonObjectTwo = new JsonObject();
             int movieCount = 0;
             while (rs.next()) {
-                String movie = rs.getString("name");
+                String movie = rs.getString("title");
                 String movie_id = rs.getString("id");
                 jsonObjectTwo.addProperty("movie_" + Integer.toString(movieCount), movie);
                 jsonObjectTwo.addProperty("movie_id_" + Integer.toString(movieCount), movie_id);
@@ -102,12 +105,11 @@ public class StarServlet extends HttpServlet {
             rs.close();
             statement.close();
 
-            // Log to localhost log
-            request.getServletContext().log("getting " + jsonArray.size() + " results");
             // Write JSON string to output
             out.write(jsonArray.toString());
             // Set response status to 200 (OK)
             response.setStatus(200);
+            System.out.println(jsonArray.toString());
 
         } catch (Exception e) {
             // Write error message JSON object to output
