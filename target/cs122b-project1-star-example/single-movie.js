@@ -1,4 +1,4 @@
-function getParameterByName(target){
+function getParameterByName(target) {
     // Get request URL
     let url = window.location.href;
     // Encode target parameter name to url encoding
@@ -19,20 +19,18 @@ function handleMovieResult(resultData) {
 
     // Populate the star table
     // Find the empty table body by id "star_table_body"
-    let movieTableBodyElement = jQuery("#single_movie_table_body");
-    let movieTitleElement = jQuery("#movie_title")
+    let starTableBodyElement = jQuery("#single_movie_table_body");
+
     // Concatenate the html tags with resultData jsonObject
     let rowHTML = "";
-    let titleHTML = "";
     rowHTML += "<tr>";
     //title
-    titleHTML += resultData[0]["movie_title"];
+    rowHTML += "<th>" + resultData[0]["movie_title"] + "</th>";
     //year
-    titleHTML += "(" + resultData[0]["movie_year"] + ")";
+    rowHTML += "<th>" + resultData[0]["movie_year"] + "</th>";
     //director
     rowHTML += "<th>" + resultData[0]["movie_director"] + "</th>";
     //genres (can be a combined string or combine them here depending)
-
     let genre_count = Number(resultData[1]["genre_count"]);
     for (let i = 0; i < genre_count; i++) {
         rowHTML += "<th>" + resultData[1]["genre_" + i] + "</th>";
@@ -45,14 +43,13 @@ function handleMovieResult(resultData) {
             + resultData[2]["star_" + i] +
             '</a>' + "</th>";
     }
-
+    rowHTML += "<th>" + resultData[2]["star"] + "</th>";
     //rating
     rowHTML += "<th>" + resultData[0]["movie_rating"] + "</th>";
     rowHTML += "</tr>";
 
     // Append the row created to the table body, which will refresh the page
-    movieTableBodyElement.append(rowHTML);
-    movieTitleElement.append(titleHTML);
+    starTableBodyElement.append(rowHTML)
 }
 
 
