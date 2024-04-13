@@ -96,7 +96,7 @@ public class MovieServlet extends HttpServlet {
             jsonObjectOne.addProperty("movie_title", movie_title);
             jsonObjectOne.addProperty("movie_director", movie_director);
             jsonObjectOne.addProperty("movie_year", movie_year);
-            jsonObjectOne.addProperty("rating", movie_rating);
+            jsonObjectOne.addProperty("movie_rating", movie_rating);
             jsonArray.add(jsonObjectOne);
 
             // Perform third query to get genres

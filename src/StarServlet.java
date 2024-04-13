@@ -88,7 +88,6 @@ public class StarServlet extends HttpServlet {
             statement = conn.prepareStatement(queryMovies);
             statement.setString(1, id);
             rs = statement.executeQuery();
-            System.out.println(jsonArray.toString());
 
             // Second JSON object will have all movies star was in
             JsonObject jsonObjectTwo = new JsonObject();
@@ -109,7 +108,6 @@ public class StarServlet extends HttpServlet {
             out.write(jsonArray.toString());
             // Set response status to 200 (OK)
             response.setStatus(200);
-            System.out.println(jsonArray.toString());
 
         } catch (Exception e) {
             // Write error message JSON object to output
