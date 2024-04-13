@@ -25,18 +25,9 @@ function handleMovieListResult(resultData) {
         rowHTML += "<th>" + resultData[i]["movie_genre_2"] + "</th>";
         rowHTML += "<th>" + resultData[i]["movie_genre_3"] + "</th>";
         //stars (same as with genres)
-        rowHTML += "<th>" +
-            '<a href="single-star.html?id=' + resultData[i]['movie_star_1'] + '">'
-            + resultData[i]["movie_star_id_1"] +
-            '</a>' + "</th>";
-        rowHTML += "<th>" +
-            '<a href="single-star.html?id=' + resultData[i]['movie_star_2'] + '">'
-            + resultData[i]["movie_star_id_2"] +
-            '</a>' + "</th>";
-        rowHTML += "<th>" +
-            '<a href="single-star.html?id=' + resultData[i]['movie_star_3'] + '">'
-            + resultData[i]["movie_star_id_3"] +
-            '</a>' + "</th>";
+        rowHTML += "<th>" + resultData[i]["movie_star_1"] + "</th>";
+        rowHTML += "<th>" + resultData[i]["movie_star_2"] + "</th>";
+        rowHTML += "<th>" + resultData[i]["movie_star_3"] + "</th>";
         //rating
         rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";
         rowHTML += "</tr>";

@@ -65,7 +65,7 @@ public class MovieListServlet extends HttpServlet {
                 String queryGenres = "SELECT genres.name FROM movies JOIN genres_in_movies ON genres_in_movies.movieId = movies.id JOIN genres ON genres.id = genres_in_movies.genreId WHERE movies.id = '" + movie_id + "' LIMIT 3;";
                 ResultSet genres = statementTwo.executeQuery(queryGenres);
                 Statement statementThree = conn.createStatement();
-                String queryStars = "SELECT stars.name, stars.id FROM movies JOIN stars_in_movies ON stars_in_movies.movieId = movies.id JOIN stars ON stars.id = stars_in_movies.starId WHERE movies.id = '" + movie_id + "' LIMIT 3;";
+                String queryStars = "SELECT stars.name FROM movies JOIN stars_in_movies ON stars_in_movies.movieId = movies.id JOIN stars ON stars.id = stars_in_movies.starId WHERE movies.id = '" + movie_id + "' LIMIT 3;";
                 ResultSet stars = statementThree.executeQuery(queryStars);
 
                 // Create a JsonObject based on the data we retrieve
@@ -88,9 +88,7 @@ public class MovieListServlet extends HttpServlet {
                 int star_count = 1;
                 while (stars.next()) {
                     String curr_star = stars.getString("name");
-                    String curr_id = stars.getString("id");
                     jsonObject.addProperty("movie_star_" + Integer.toString(star_count), curr_star);
-                    jsonObject.addProperty("movie_star_id_" + Integer.toString(star_count), curr_id);
                     star_count++;
                 }
                 stars.close();

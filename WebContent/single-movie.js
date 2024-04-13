@@ -20,15 +20,13 @@ function handleMovieResult(resultData) {
     // Populate the star table
     // Find the empty table body by id "star_table_body"
     let movieTableBodyElement = jQuery("#single_movie_table_body");
-    let movieTitleElement = jQuery("#movie_title")
     // Concatenate the html tags with resultData jsonObject
     let rowHTML = "";
-    let titleHTML = "";
     rowHTML += "<tr>";
     //title
-    titleHTML += resultData[0]["movie_title"];
+    rowHTML += "<th>" + resultData[0]["movie_title"] + "</th>";
     //year
-    titleHTML += "(" + resultData[0]["movie_year"] + ")";
+    rowHTML += "<th>" + resultData[0]["movie_year"] + "</th>";
     //director
     rowHTML += "<th>" + resultData[0]["movie_director"] + "</th>";
     //genres (can be a combined string or combine them here depending)
@@ -52,7 +50,6 @@ function handleMovieResult(resultData) {
 
     // Append the row created to the table body, which will refresh the page
     movieTableBodyElement.append(rowHTML);
-    movieTitleElement.append(titleHTML);
 }
 
 
