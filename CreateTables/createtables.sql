@@ -1,3 +1,6 @@
+CREATE DATABASE moviedb;
+USE moviedb;
+
 -- Table creation scripts --
 CREATE TABLE movies (
     id VARCHAR(10) PRIMARY KEY NOT NULL,
