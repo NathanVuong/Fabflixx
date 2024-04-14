@@ -44,6 +44,7 @@ CREATE TABLE creditcards (
 CREATE TABLE customers (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     firstName VARCHAR(50) NOT NULL,
+    lastName VARCHAR(50) NOT NULL,
     ccId VARCHAR(20) NOT NULl,
     address VARCHAR(200) NOT NULL,
     email VARCHAR(50) NOT NULL,
