@@ -1,0 +1,37 @@
+body{
+    background-color: rgb(243, 234, 224);
+    font-family: "Open Sans", sans-serif;
+}
+
+
+h1 {
+    font-weight: bold;
+}
+
+
+p{
+    line-height: 1;
+}
+
+.gradient-background {
+    background: linear-gradient(300deg, #ed7d31, #ff4f03, #ecab80);
+    background-size: 180% 180%;
+    animation: gradient-animation 18s ease infinite;
+}
+
+.list-text {
+    font-size: x-large;
+}
+
+.nav-pills > li > a.active {
+    background-color: #ff5b1f !important;
+}
+
+.nav-pills > .sub-item > a.nav-link {
+    color: #ff5b1f !important;
+}
+
+
+.table-color{
+    background:rgb(235, 168, 92);
+}

@@ -1,47 +1,107 @@
 <!doctype html>
 <html lang="en">
 
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no"
           name="viewport">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+            crossorigin="anonymous"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+            rel="stylesheet"
+    />
     <title>fabflix</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 
+
 <body>
-<h1>Top 20 rated movies</h1>
+<header class="d-flex flex-wrap justify-content-center py-3 border-bottom px-3">
+    <div
+            class="d-flex align-items-center mb-md-0 me-md-auto link-body-emphasis text-decoration-none "
+    >
+        <svg class="bi me-2" width="40" height="32">
+            <use xlink:href="#bootstrap"></use>
+        </svg>
+        <img
+                src="https://cdn-icons-png.flaticon.com/512/2503/2503508.png"
+                alt="Movie Image"
+                height="40px"
+        />
+        <span class="fs-4">&nbsp; FABLIX</span>
+    </div>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a href="#" class="nav-link active" aria-current="page">Home</a>
+        </li>
+        <li class="nav-item sub-item">
+            <a href="index.html" class="nav-link">Top 20</a>
+        </li>
+    </ul>
+</header>
+<div class="container">
+    <div class="gradient-background my-4"><br></div>
+    <h1 class="mx-2">Top 20 rated movies</h1>
+</div>
 
-<!-- Id "star_table" is useful for jQuery to find the html element with id, class here is mapping to Bootstrap defined class CSS -->
-<table id=movie_list_table class="table table-striped">
-    <!-- Create a table header -->
-    <thead>
-    <tr>
-        <!-- Titles of each column-->
-        <th>Title</th>
-        <th>Year</th>
-        <th>Director</th>
-        <th>Genre One</th>
-        <th>Genre Two</th>
-        <th>Genre Three</th>
-        <th>Star One</th>
-        <th>Star Two</th>
-        <th>Star Three</th>
-        <th>Rating</th>
-    </tr>
-    </thead>
-    <!-- Table body is left empty here, will be populated with the data retrieved with index.js -->
-    <!-- Again, id "star_table_body" is useful for jQuery to find this html element -->
-    <tbody id=movie_list_table_body></tbody>
-</table>
 
+<div class="container">
+    <!-- Id "star_table" is useful for jQuery to find the html element with id, class here is mapping to Bootstrap defined class CSS -->
+    <table id=movie_list_table class="table table-striped">
+        <!-- Create a table header -->
+        <thead>
+        <tr>
+            <!-- Titles of each column-->
+            <th>Title</th>
+            <th>Year</th>
+            <th>Director</th>
+            <th>Genre One</th>
+            <th>Genre Two</th>
+            <th>Genre Three</th>
+            <th>Star One</th>
+            <th>Star Two</th>
+            <th>Star Three</th>
+            <th>Rating</th>
+        </tr>
+        </thead>
+        <!-- Table body is left empty here, will be populated with the data retrieved with index.js -->
+        <!-- Again, id "star_table_body" is useful for jQuery to find this html element -->
+        <tbody id=movie_list_table_body></tbody>
+    </table>
+</div>
+
+
+<footer
+        class="d-flex flex-wrap justify-content-between align-items-center border-top"
+        id="bottom"
+>
+    <div class="col-md-4 d-flex align-items-center py-3">
+        <a
+                href="/"
+                class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1"
+        >
+            <svg class="bi" width="30" height="24">
+                <use xlink:href="#bootstrap"></use>
+            </svg>
+        </a>
+        <span class="mb-3 mb-md-0 text-body-secondary"
+        >© 2024 Team_Searchers</span
+        >
+    </div>
+</footer>
 <!-- Load jQuery and Bootstrap JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 
 <!-- Load our own JS file -->
 <!-- The path is relative to index.html, since these two files are in the same directory -->
@@ -49,6 +109,8 @@
      otherwise the url is relative to the root path-->
 <script src="index.js"></script>
 
+
 </body>
+
 
 </html>
