@@ -53,12 +53,15 @@ public class LoginServlet extends HttpServlet {
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
             String passwordFromQuery = "";
-            passwordFromQuery = resultSet.getString("password");
+            if (resultSet.next()) {
+                passwordFromQuery = resultSet.getString("password");
+            }
             resultSet.close();
             statement.close();
 
+
             JsonObject responseJsonObject = new JsonObject();
-            if (passwordFromQuery.equals(password)) {
+            if (passwordFromQuery.equals(password) && !(passwordFromQuery.isEmpty())) {
                 // Login success:
 
                 // set this user into the session
