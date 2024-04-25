@@ -35,3 +35,15 @@ p{
 .table-color{
     background:rgb(235, 168, 92);
 }
+
+.btn-outline-success {
+    border-color: #ff5b1f !important;
+    color: #ff5b1f !important;
+}
+
+.btn-outline-success:hover, .btn-outline-success:active, .btn-outline-success:visited {
+    border-color: #ff5b1f !important;
+    background-color: #ff5b1f !important;
+    color: white !important;
+}
+

@@ -26,7 +26,7 @@
 <body>
 <header class="d-flex flex-wrap justify-content-center py-3 border-bottom px-3">
     <div
-            class="d-flex align-items-center mb-md-0 me-md-auto link-body-emphasis text-decoration-none "
+            class="d-flex align-items-center mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
     >
         <svg class="bi me-2" width="40" height="32">
             <use xlink:href="#bootstrap"></use>
@@ -40,12 +40,23 @@
     </div>
     <ul class="nav nav-pills">
         <li class="nav-item">
-            <a href="#" class="nav-link active" aria-current="page">Home</a>
+            <a href="index.html" class="nav-link active" aria-current="page">Home</a>
         </li>
         <li class="nav-item sub-item">
             <a href="movie-list.html" class="nav-link">Top 20</a>
         </li>
     </ul>
+    <form id="search-submit" class="form-inline d-flex flex-row my-2 my-lg-0">
+        <input name="title" class="form-control mr-sm-2" type="search" placeholder="Title" aria-label="Search">
+        &nbsp;
+        <input name="year" class="form-control mr-sm-2" type="number" placeholder="Year" aria-label="Search">
+        &nbsp;
+        <input name="director" class="form-control mr-sm-2" type="search" placeholder="Director" aria-label="Search">
+        &nbsp;
+        <input name="star" class="form-control mr-sm-2" type="search" placeholder="Star" aria-label="Search">
+        &nbsp;
+        <input type="submit" class="btn btn-outline-success my-2 my-sm-0">
+    </form>
 </header>
 <div class="container">
     <div class="gradient-background my-4"><br></div>
