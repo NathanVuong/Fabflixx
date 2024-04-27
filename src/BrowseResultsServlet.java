@@ -20,8 +20,8 @@ import java.sql.Statement;
 
 
 // Declaring a WebServlet called MovieListServlet, which maps to url "/api/moviel=List"
-@WebServlet(name = "SearchResultsServlet", urlPatterns = "/api/searchMovie")
-public class SearchResultsServlet extends HttpServlet {
+@WebServlet(name = "BrowseResultsServlet", urlPatterns = "/api/browseMovie")
+public class BrowseResultsServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
 
@@ -48,9 +48,6 @@ public class SearchResultsServlet extends HttpServlet {
 
         String genre = request.getParameter("genre");
         String title = request.getParameter("title");
-        String year = request.getParameter("year");
-        String director = request.getParameter("director");
-        String star = request.getParameter("star");
 
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
@@ -70,16 +67,12 @@ public class SearchResultsServlet extends HttpServlet {
                 queryTopMovies += " AND genres.name = '" + genre + "'";
             }
             if (title != null && !title.isEmpty()) {
-                queryTopMovies += " AND movies.title LIKE '%" + title + "%'";
-            }
-            if (year != null && !year.isEmpty()) {
-                queryTopMovies += " AND movies.year LIKE '%" + year + "%'";
-            }
-            if (director != null && !director.isEmpty()) {
-                queryTopMovies += " AND movies.director LIKE '%" + director + "%'";
-            }
-            if (star != null && !star.isEmpty()) {
-                queryTopMovies += " AND stars.name LIKE '%" + star + "%'";
+                if (title.equals("*")) {
+                    queryTopMovies += " AND movies.title REGEXP '^[^a-zA-Z0-9]'";
+                }
+                else {
+                    queryTopMovies += " AND movies.title LIKE '" + title + "%'";
+                }
             }
             queryTopMovies += " ORDER BY ratings.rating DESC;";
 

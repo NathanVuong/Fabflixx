@@ -17,7 +17,7 @@ function getParameterByName(target){
 }
 
 
-function handleSearchResult(resultData) {
+function handleBrowsingResult(resultData) {
     // Populate the star table
     // Find the empty table body by id "star_table_body"
     let starTableBodyElement = jQuery("#movie_list_table_body");
@@ -68,15 +68,12 @@ function handleSearchResult(resultData) {
 
 // Get id from URL
 let title = getParameterByName('title');
-let year = getParameterByName('year');
-let director = getParameterByName('director');
-let star = getParameterByName('star');
+let genre = getParameterByName('genre');
 
 // Makes the HTTP GET request and registers on success callback function handleStarResult
 jQuery.ajax({
     dataType: "json", // Setting return data type
     method: "GET", // Setting request method
-    url: "api/searchMovie?title=" + title + "&year=" +
-        year + "&director=" + director + "&star=" + star,
-    success: (resultData) => handleSearchResult(resultData) // Setting callback function to handle data returned successfully by the StarsServlet
+    url: "api/browseMovie?title=" + title + "&genre=" + genre,
+    success: (resultData) => handleBrowsingResult(resultData) // Setting callback function to handle data returned successfully by the StarsServlet
 });
