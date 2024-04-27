@@ -1,5 +1,3 @@
-let searchForm= $("#search-submit");
-
 function getParameterByName(target){
     // Get request URL
     let url = window.location.href;
@@ -18,22 +16,6 @@ function getParameterByName(target){
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-function handleSearchResults(searchEvent) {
-
-    searchEvent.preventDefault();
-
-    $.ajax("api/searchBrowseMovie", {
-        method: "POST",
-        data: searchForm.serialize(),
-        success: (resultData) => displaySearchResults(resultData)
-    });
-}
-
-function displaySearchResults(resultData) {
-    scope.searchDetails = resultData;
-    window.location.replace("search-result.html");
-
-}
 
 function handleSearchResult(resultData) {
     // Populate the star table
@@ -98,5 +80,3 @@ jQuery.ajax({
         year + "&director=" + director + "&star=" + star,
     success: (resultData) => handleSearchResult(resultData) // Setting callback function to handle data returned successfully by the StarsServlet
 });
-
-searchForm.submit(handleSearchResults);
