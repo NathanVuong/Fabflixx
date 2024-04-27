@@ -41,25 +41,48 @@ public class SearchResultsServlet extends HttpServlet {
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("Get works");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json"); // Response mime type
 
-
-        // Output stream to STDOUT
         PrintWriter out = response.getWriter();
 
+        String genre = request.getParameter("genre");
+        String title = request.getParameter("title");
+        String year = request.getParameter("year");
+        String director = request.getParameter("director");
+        String star = request.getParameter("star");
 
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
-
-
             // Declare our statement
             Statement statementOne = conn.createStatement();
-
-
             // Get top 20 movies
-            String queryTopMovies = "SELECT DISTINCT movies.id, movies.title, movies.year, movies.director, ratings.rating FROM movies JOIN ratings ON movies.id = ratings.movieId ORDER BY ratings.rating DESC LIMIT 20;";
+            String queryTopMovies = "SELECT DISTINCT movies.id, movies.title, movies.year, movies.director, ratings.rating " +
+                    "FROM movies " +
+                    "JOIN ratings ON movies.id = ratings.movieId " +
+                    "JOIN genres_in_movies ON movies.id = genres_in_movies.movieId " +
+                    "JOIN genres ON genres_in_movies.genreId = genres.id " +
+                    "JOIN stars_in_movies ON movies.id = stars_in_movies.movieId " +
+                    "JOIN stars ON stars_in_movies.starId = stars.id " +
+                    "WHERE 1=1";
+            if (genre != null && !genre.isEmpty()) {
+                queryTopMovies += " AND genres.name = '" + genre + "'";
+            }
+            if (title != null && !title.isEmpty()) {
+                queryTopMovies += " AND movies.title = '" + title + "'";
+            }
+            if (year != null && !year.isEmpty()) {
+                queryTopMovies += " AND movies.year = " + year;
+            }
+            if (director != null && !director.isEmpty()) {
+                queryTopMovies += " AND movies.director = '" + director + "'";
+            }
+            if (star != null && !star.isEmpty()) {
+                queryTopMovies += " AND stars.name = '" + star + "'";
+            }
+            queryTopMovies += " ORDER BY ratings.rating DESC;";
+
+
             ResultSet topMovies = statementOne.executeQuery(queryTopMovies);
             JsonArray jsonArray = new JsonArray();
 
@@ -70,7 +93,6 @@ public class SearchResultsServlet extends HttpServlet {
                 String movie_year = topMovies.getString("year");
                 String movie_director = topMovies.getString("director");
                 String movie_rating = topMovies.getString("rating");
-
 
                 // Retrieve 3 genres and 3 stars max for top movies
                 String movie_id = topMovies.getString("id");
