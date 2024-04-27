@@ -65,20 +65,21 @@ public class SearchResultsServlet extends HttpServlet {
                     "JOIN stars_in_movies ON movies.id = stars_in_movies.movieId " +
                     "JOIN stars ON stars_in_movies.starId = stars.id " +
                     "WHERE 1=1";
+            request.getServletContext().log("getting results");
             if (genre != null && !genre.isEmpty()) {
                 queryTopMovies += " AND genres.name = '" + genre + "'";
             }
             if (title != null && !title.isEmpty()) {
-                queryTopMovies += " AND movies.title = '" + title + "'";
+                queryTopMovies += " AND movies.title LIKE '%" + title + "%'";
             }
             if (year != null && !year.isEmpty()) {
-                queryTopMovies += " AND movies.year = " + year;
+                queryTopMovies += " AND movies.year LIKE '%" + year + "%'";
             }
             if (director != null && !director.isEmpty()) {
-                queryTopMovies += " AND movies.director = '" + director + "'";
+                queryTopMovies += " AND movies.director LIKE '%" + director + "%'";
             }
             if (star != null && !star.isEmpty()) {
-                queryTopMovies += " AND stars.name = '" + star + "'";
+                queryTopMovies += " AND stars.name LIKE '%" + star + "%'";
             }
             queryTopMovies += " ORDER BY ratings.rating DESC;";
 

@@ -56,22 +56,26 @@ function handleSearchResult(resultData) {
         //director
         rowHTML += "<th>" + resultData[i]["movie_director"] + "</th>";
         //genres (can be a combined string or combine them here depending)
-        rowHTML += "<th>" + resultData[i]["movie_genre_1"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_genre_2"] + "</th>";
-        rowHTML += "<th>" + resultData[i]["movie_genre_3"] + "</th>";
+        for (let j = 1; j <= 3; j++) {
+            if (resultData[i]["movie_genre_" + j] == null) {
+                rowHTML += "<th>" + "N/A" + "</th>";
+            }
+            else {
+                rowHTML += "<th>" + resultData[i]["movie_genre_" + j] + "</th>";
+            }
+        }
         //stars (same as with genres)
-        rowHTML += "<th>" +
-            '<a href="single-star.html?id=' + resultData[i]['movie_star_1'] + '">'
-            + resultData[i]["movie_star_id_1"] +
-            '</a>' + "</th>";
-        rowHTML += "<th>" +
-            '<a href="single-star.html?id=' + resultData[i]['movie_star_2'] + '">'
-            + resultData[i]["movie_star_id_2"] +
-            '</a>' + "</th>";
-        rowHTML += "<th>" +
-            '<a href="single-star.html?id=' + resultData[i]['movie_star_3'] + '">'
-            + resultData[i]["movie_star_id_3"] +
-            '</a>' + "</th>";
+        for (let j = 1; j <= 3; j++) {
+            if (resultData[i]["movie_star_" + j] == null) {
+                rowHTML += "<th>" + "N/A" + "</th>";
+            }
+            else {
+                rowHTML += "<th>" +
+                    '<a href="single-star.html?id=' + resultData[i]["movie_star_id_" + j] + '">'
+                    + resultData[i]["movie_star_" + j] +
+                    '</a>' + "</th>";
+            }
+        }
         //rating
         rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";
         rowHTML += "</tr>";
@@ -90,8 +94,8 @@ let star = getParameterByName('star');
 jQuery.ajax({
     dataType: "json", // Setting return data type
     method: "GET", // Setting request method
-    url: "api/single-star?title=" + title + "year=" +
-        year+ "director=" + director + "star=" + star,
+    url: "api/searchBrowseMovie?title=" + title + "&year=" +
+        year + "&director=" + director + "&star=" + star,
     success: (resultData) => handleSearchResult(resultData) // Setting callback function to handle data returned successfully by the StarsServlet
 });
 

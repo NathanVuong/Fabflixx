@@ -1,22 +1,3 @@
-window.scope = {};
-
-let searchForm= $("#search-submit");
-
-function handleSearchResults(searchEvent) {
-
-    searchEvent.preventDefault();
-
-    console.log("did search");
-
-    window.location.replace("search-result.html?" + "title=" + $("#title").val() + "year=" +
-        $("#year").val() + "director=" + $("#director").val() + "star=" + $("#star").val());
-}
-
-function displaySearchResults(resultData) {
-    window.location.replace("search-result.html");
-
-}
-
 function handleMovieListResult(resultData) {
     console.log("handleMovieListResult: populating star table from resultData");
 
@@ -88,5 +69,3 @@ jQuery.ajax({
     url: "api/movieList", // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleMovieListResult(resultData) // Setting callback function to handle data returned successfully by the StarsServlet
 });
-
-searchForm.submit(handleSearchResults);
