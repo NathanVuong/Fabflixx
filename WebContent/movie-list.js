@@ -8,15 +8,11 @@ function handleSearchResults(searchEvent) {
 
     console.log("did search");
 
-    $.ajax("api/searchBrowseMovie", {
-        method: "POST",
-        data: searchForm.serialize(),
-        success: (resultData) => displaySearchResults(resultData)
-    });
+    window.location.replace("search-result.html?" + "title=" + $("#title").val() + "year=" +
+        $("#year").val() + "director=" + $("#director").val() + "star=" + $("#star").val());
 }
 
 function displaySearchResults(resultData) {
-    scope.searchDetails = resultData;
     window.location.replace("search-result.html");
 
 }
