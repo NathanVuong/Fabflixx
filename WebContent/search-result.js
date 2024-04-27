@@ -12,8 +12,7 @@ function handleSearchResults(searchEvent) {
 }
 
 function displaySearchResults(resultData) {
-    let resultDataJson = JSON.parse(resultData);
-    scope.searchDetails = resultDataJson;
+    scope.searchDetails = resultData;
     window.location.replace("search-result.html");
 
 }
@@ -64,5 +63,7 @@ function handleMovieListResult() {
         starTableBodyElement.append(rowHTML);
     }
 }
+
+handleMovieListResult();
 
 searchForm.submit(handleSearchResults);

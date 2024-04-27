@@ -6,6 +6,8 @@ function handleSearchResults(searchEvent) {
 
     searchEvent.preventDefault();
 
+    console.log("did search");
+
     $.ajax("api/searchBrowseMovie", {
         method: "POST",
         data: searchForm.serialize(),
@@ -14,8 +16,7 @@ function handleSearchResults(searchEvent) {
 }
 
 function displaySearchResults(resultData) {
-    let resultDataJson = JSON.parse(resultData);
-    scope.searchDetails = resultDataJson;
+    scope.searchDetails = resultData;
     window.location.replace("search-result.html");
 
 }
