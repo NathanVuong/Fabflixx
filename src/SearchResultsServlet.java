@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -54,6 +55,12 @@ public class SearchResultsServlet extends HttpServlet {
         String movieNumber = request.getParameter("movie_number");
         String order = request.getParameter("order");
         String page = request.getParameter("page");
+
+        //get session and update result
+        HttpSession session = request.getSession();
+        String resultURL = "search-result.html?title=" + title + "&year=" + year + "&director" + director +
+                "&star" + star + "&movie_number=" + movieNumber + "&order=" + order + "&page=" + page;
+        session.setAttribute("result", resultURL);
 
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
