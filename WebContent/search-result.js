@@ -101,6 +101,7 @@ function handleSearchResult(resultData) {
         }
         //rating
         rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";
+        rowHTML += "<th><button onclick=\"addItem('" + resultData[i]["movie_title"] + "', " + resultData[i]["movie_price"] + ")\">Add</button></th>";
         rowHTML += "</tr>";
         // Append the row created to the table body, which will refresh the page
         resultTableBodyElement.append(rowHTML);
