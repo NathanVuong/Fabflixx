@@ -68,3 +68,7 @@ p{
     border: none;
     color: black;
 }
+
+#year{
+    width: 90px;
+}
