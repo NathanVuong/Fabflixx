@@ -64,9 +64,11 @@ class ShoppingCart {
         for (Item existingItem : items) {
             if (existingItem.getName().equals(item.getName())) {
                 items.remove(existingItem);
+                return;
             }
         }
     }
+
 }
 
 // Item class (example)

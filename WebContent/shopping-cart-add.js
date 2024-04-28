@@ -4,4 +4,5 @@ function addItem(title, price) {
         method: "POST", // Setting request method
         url: "api/shoppingCart?title=" + title + "&price=" + price, // Setting request url, which is mapped by StarsServlet in Stars.java
     });
+    alert("Added item to cart!");
 }
