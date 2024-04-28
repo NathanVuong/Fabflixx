@@ -63,7 +63,7 @@ class ShoppingCart {
     public void deleteItem(Item item) {
         for (Item existingItem : items) {
             if (existingItem.getName().equals(item.getName())) {
-                    items.remove(existingItem);
+                items.remove(existingItem);
             }
         }
     }

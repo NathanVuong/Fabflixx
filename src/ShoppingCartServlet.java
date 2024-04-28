@@ -50,7 +50,7 @@ public class ShoppingCartServlet extends HttpServlet {
         String itemName = request.getParameter("title");
         String itemPriceString = request.getParameter("price");
 
-        if (itemPriceString.equals("Delete")) {
+        if (itemPriceString.equals("delete")) {
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("user");
 
@@ -78,7 +78,12 @@ public class ShoppingCartServlet extends HttpServlet {
                 ShoppingCart shoppingCart = user.getShoppingCart();
                 Item item = new Item(itemName, itemPrice, 1);
                 shoppingCart.subtractItem(item);
+
             }
         }
+
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/json");
+        response.getWriter().write("{\"success\": true}");
     }
 }
