@@ -65,7 +65,7 @@ public class StarServlet extends HttpServlet {
 
             // Construct a queries with parameters represented by "?"
             String queryStars = "SELECT DISTINCT stars.name, stars.birthYear FROM stars WHERE stars.id = ?;";
-            String queryMovies = "SELECT DISTINCT movies.id, movies.title, movies.director, movies.year, movies.price FROM movies JOIN stars_in_movies ON stars_in_movies.movieId = movies.id WHERE stars_in_movies.starId = ?;";
+            String queryMovies = "SELECT DISTINCT movies.id, movies.title, movies.director, movies.year, movies.price FROM movies JOIN stars_in_movies ON stars_in_movies.movieId = movies.id WHERE stars_in_movies.starId = ? ORDER BY movies.year DESC;";
 
 
             // Declare our statement
