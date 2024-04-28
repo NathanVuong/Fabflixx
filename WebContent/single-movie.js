@@ -47,10 +47,13 @@ function handleMovieResult(resultData) {
 
     let genre_count = Number(resultData[1]["genre_count"]);
     for (let i = 0; i < genre_count; i++) {
-        if (genre_count - i > 1){
-            genresHTML += resultData[1]["genre_" + i] + ", ";
+        genresHTML += '<a href="browse-result.html?title=&genre=' +
+            resultData[1]['genre_' + i] + '&movie_number=25&order=tara&page=1">'
+            + resultData[1]["genre_" + i] +
+            '</a>';
+        if (genre_count - i > 1) {
+            genresHTML += ", ";
         }
-        genresHTML += resultData[1]["genre_" + i];
     }
     //stars (same as with genres)
     let star_count = Number(resultData[2]["star_count"]);
