@@ -9,6 +9,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -48,6 +50,10 @@ public class MovieListServlet extends HttpServlet {
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
 
+        // set this user into the session
+        HttpSession session = request.getSession();
+        session.setAttribute("result", "movie-list.html");
+
 
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
@@ -75,10 +81,10 @@ public class MovieListServlet extends HttpServlet {
                 // Retrieve 3 genres and 3 stars max for top movies
                 String movie_id = topMovies.getString("id");
                 Statement statementTwo = conn.createStatement();
-                String queryGenres = "SELECT genres.name FROM movies JOIN genres_in_movies ON genres_in_movies.movieId = movies.id JOIN genres ON genres.id = genres_in_movies.genreId WHERE movies.id = '" + movie_id + "' LIMIT 3;";
+                String queryGenres = "SELECT genres.name FROM movies JOIN genres_in_movies ON genres_in_movies.movieId = movies.id JOIN genres ON genres.id = genres_in_movies.genreId WHERE movies.id = '" + movie_id + "' ORDER BY genres.name ASC LIMIT 3;";
                 ResultSet genres = statementTwo.executeQuery(queryGenres);
                 Statement statementThree = conn.createStatement();
-                String queryStars = "SELECT stars.name, stars.id FROM movies JOIN stars_in_movies ON stars_in_movies.movieId = movies.id JOIN stars ON stars.id = stars_in_movies.starId WHERE movies.id = '" + movie_id + "' LIMIT 3;";
+                String queryStars = "SELECT stars.name, stars.id FROM movies JOIN stars_in_movies ON stars_in_movies.movieId = movies.id JOIN stars ON stars.id = stars_in_movies.starId WHERE movies.id = '" + movie_id + "' ORDER BY stars.name ASC LIMIT 3;";
                 ResultSet stars = statementThree.executeQuery(queryStars);
 
 
