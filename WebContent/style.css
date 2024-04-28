@@ -47,3 +47,24 @@ p{
     color: white !important;
 }
 
+.move-btn:hover{
+    border-color: #ff5b1f !important;
+}
+
+.browse-buttons{
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.browse-buttons:hover{
+    border-color: #ff5b1f !important;
+}
+
+#movie-number{
+    width: 60px;
+}
+
+#page-display{
+    border: none;
+    color: black;
+}
