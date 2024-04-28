@@ -1,3 +1,5 @@
+let updateForm= $("#update-form");
+
 function getParameterByName(target){
     // Get request URL
     let url = window.location.href;
@@ -16,14 +18,53 @@ function getParameterByName(target){
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+// Get id from URL
+let title = getParameterByName('title');
+let year = getParameterByName('year');
+let director = getParameterByName('director');
+let star = getParameterByName('star');
+let movieNumber = getParameterByName('movie_number');
+let order = getParameterByName('order');
+let page = getParameterByName("page");
+
+$('#next-button').on("click", function(){
+    window.location.replace("search-result.html?" + "title=" + title + "&year=" +
+        year + "&director=" + director + "&star=" + star + "&movie_number=" +
+        movieNumber + "&order=" + order + "&page=" + (parseInt(page)+1));
+})
+
+$('#prev-button').on("click", function(){
+    window.location.replace("search-result.html?" + "title=" + title + "&year=" +
+        year + "&director=" + director + "&star=" + star + "&movie_number=" +
+        movieNumber + "&order=" + order + "&page=" + (parseInt(page)-1));
+})
 
 function handleSearchResult(resultData) {
     // Populate the star table
     // Find the empty table body by id "star_table_body"
-    let starTableBodyElement = jQuery("#movie_list_table_body");
+    let resultTableBodyElement = jQuery("#result_list_table_body");
 
-    // Iterate through resultData, no more than 10 entries
-    for (let i = 0; i < Math.min(20, resultData.length); i++) {
+    // Disabling prev and next buttons if needed
+    if(resultData[0]["future"].localeCompare("false") == 0){
+        $('#next-button').prop('disabled', true);
+    } else {
+        $('#next-button').prop('disabled', false);
+    }
+
+    if(parseInt(page) == 1){
+        $('#prev-button').prop('disabled', true);
+    } else {
+        $('#prev-button').prop('disabled', false);
+    }
+
+    //updating the page number
+    $('#page-text').text(page);
+
+    $("#movie-number option[value=" + movieNumber + "]").prop('selected', true);
+    $("#order option[value=" + order + "]").prop('selected', true);
+
+    // Iterate through resultData
+    for (let i = 1; i < resultData.length; i++) {
 
         // Concatenate the html tags with resultData jsonObject
         let rowHTML = "";
@@ -60,24 +101,30 @@ function handleSearchResult(resultData) {
         }
         //rating
         rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";
-        rowHTML += "<th><button onclick=\"addItem('" + resultData[i]["movie_title"] + "', " + resultData[i]["movie_price"] + ")\">Add</button></th>";
         rowHTML += "</tr>";
         // Append the row created to the table body, which will refresh the page
-        starTableBodyElement.append(rowHTML);
+        resultTableBodyElement.append(rowHTML);
     }
 }
 
-// Get id from URL
-let title = getParameterByName('title');
-let year = getParameterByName('year');
-let director = getParameterByName('director');
-let star = getParameterByName('star');
+function handleUpdate(updateEvent) {
+
+    updateEvent.preventDefault();
+    console.log("did update");
+
+    window.location.replace("search-result.html?" + "title=" + title + "&year=" +
+        year + "&director=" + director + "&star=" + star + "&movie_number=" +
+        $("#movie-number").val() + "&order=" + $("#order").val() + "&page=1");
+}
 
 // Makes the HTTP GET request and registers on success callback function handleStarResult
 jQuery.ajax({
     dataType: "json", // Setting return data type
     method: "GET", // Setting request method
     url: "api/searchMovie?title=" + title + "&year=" +
-        year + "&director=" + director + "&star=" + star,
+        year + "&director=" + director + "&star=" + star +
+        "&movie_number=" + movieNumber + "&order=" + order + "&page=" + page,
     success: (resultData) => handleSearchResult(resultData) // Setting callback function to handle data returned successfully by the StarsServlet
 });
+
+updateForm.submit(handleUpdate);
