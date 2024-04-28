@@ -76,7 +76,7 @@ public class SearchResultsServlet extends HttpServlet {
                 queryTopMovies += " AND movies.title LIKE '%" + title + "%'";
             }
             if (year != null && !year.isEmpty()) {
-                queryTopMovies += " AND movies.year LIKE '%" + year + "%'";
+                queryTopMovies += " AND movies.year = '" + year + "'";
             }
             if (director != null && !director.isEmpty()) {
                 queryTopMovies += " AND movies.director LIKE '%" + director + "%'";

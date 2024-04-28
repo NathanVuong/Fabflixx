@@ -7,7 +7,7 @@ CREATE TABLE movies (
     title VARCHAR(100) NOT NULL,
     year INT NOT NULL,
     director VARCHAR(100) NOT NULL,
-    price INT NULL,
+    price INT NULL
 );
 
 CREATE TABLE stars (
@@ -58,6 +58,7 @@ CREATE TABLE sales (
     customerId INT NOT NULL,
     movieId VARCHAR(10) NOT NULL,
     saleDate DATE NOT NULL,
+    quantity INT NOT NULL,
     FOREIGN KEY (customerId) REFERENCES customers(id),
     FOREIGN KEY (movieId) REFERENCES movies(id)
 );

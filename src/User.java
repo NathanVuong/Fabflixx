@@ -46,7 +46,27 @@ class ShoppingCart {
         items.add(item);
     }
 
-    // Add more methods as needed
+    public void subtractItem(Item item) {
+        for (Item existingItem : items) {
+            if (existingItem.getName().equals(item.getName())) {
+                if (existingItem.getQuantity() <= 0) {
+                    items.remove(existingItem);
+                }
+                // If the item exists, decrement its quantity and return
+                existingItem.setQuantity(existingItem.getQuantity() - 1);
+                existingItem.setTotal();
+                return;
+            }
+        }
+    }
+
+    public void deleteItem(Item item) {
+        for (Item existingItem : items) {
+            if (existingItem.getName().equals(item.getName())) {
+                    items.remove(existingItem);
+            }
+        }
+    }
 }
 
 // Item class (example)

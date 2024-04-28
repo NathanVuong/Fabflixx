@@ -14,8 +14,10 @@ function handleCartResult(resultData) {
         // Add the item title, price, quantity, and total to the row
         rowHTML += "<td>" + currentItem["Title"] + "</td>"; // Item title
         rowHTML += "<td>$" + currentItem["Price"] + "</td>";
-        rowHTML += "<td>" + currentItem["Quantity"] + "</td>";
+        rowHTML += "<td><button onclick=\"modifyItem('" + currentItem["Title"] + "', -" + currentItem["Price"] + ")\">-</button>" +
+            currentItem["Quantity"] + "<button onclick=\"modifyItem('" + currentItem["Title"] + "', " + currentItem["Price"] + ")\">+</button></td>";
         rowHTML += "<td>$" + currentItem["Total"] + "</td>";
+        rowHTML += "<td><button onclick=\"modifyItem('" + currentItem["Title"] + "', 'Delete'" + ")\">Delete</button></td>";
 
         // Close the table row
         rowHTML += "</tr>";
@@ -24,10 +26,29 @@ function handleCartResult(resultData) {
     }
 }
 
-// Makes the HTTP GET request and registers on success callback function handleStarResult
 jQuery.ajax({
     dataType: "json", // Setting return data type
     method: "GET", // Setting request method
     url: "api/shoppingCart",
     success: (resultData) => handleCartResult(resultData) // Setting callback function to handle data returned successfully by the StarsServlet
 });
+
+function getCheckout() {
+    jQuery.ajax({
+        dataType: "json",
+        method: "GET",
+        url: "api/shoppingCart",
+        success: handleCartResult
+    });
+}
+
+function modifyItem(title, price) {
+    jQuery.ajax({
+        dataType: "json", // Setting return data type
+        method: "POST", // Setting request method
+        url: "api/shoppingCart?title=" + title + "&price=" + price, // Setting request url, which is mapped by StarsServlet in Stars.java
+        success: function() {
+            getCheckout();
+        }
+    });
+}

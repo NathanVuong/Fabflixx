@@ -48,14 +48,37 @@ public class ShoppingCartServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String itemName = request.getParameter("title");
-        int itemPrice = Integer.parseInt(request.getParameter("price"));
+        String itemPriceString = request.getParameter("price");
 
-        // Retrieve user information (assuming it's stored in the session)
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        if (itemPriceString.equals("Delete")) {
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
 
-        ShoppingCart shoppingCart = user.getShoppingCart();
-        Item item = new Item(itemName, itemPrice, 1);
-        shoppingCart.addItem(item);
+            ShoppingCart shoppingCart = user.getShoppingCart();
+            Item item = new Item(itemName, 1, 1);
+            shoppingCart.deleteItem(item);
+        }
+        else {
+            int itemPrice = Integer.parseInt(itemPriceString);
+
+            if (itemPrice >= 0) {
+                // Retrieve user information (assuming it's stored in the session)
+                HttpSession session = request.getSession();
+                User user = (User) session.getAttribute("user");
+
+                ShoppingCart shoppingCart = user.getShoppingCart();
+                Item item = new Item(itemName, itemPrice, 1);
+                shoppingCart.addItem(item);
+            }
+            else {
+                // Retrieve user information (assuming it's stored in the session)
+                HttpSession session = request.getSession();
+                User user = (User) session.getAttribute("user");
+
+                ShoppingCart shoppingCart = user.getShoppingCart();
+                Item item = new Item(itemName, itemPrice, 1);
+                shoppingCart.subtractItem(item);
+            }
+        }
     }
 }
