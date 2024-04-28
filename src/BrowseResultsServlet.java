@@ -54,7 +54,7 @@ public class BrowseResultsServlet extends HttpServlet {
             // Declare our statement
             Statement statementOne = conn.createStatement();
             // Get top 20 movies
-            String queryTopMovies = "SELECT DISTINCT movies.id, movies.title, movies.year, movies.director, ratings.rating " +
+            String queryTopMovies = "SELECT DISTINCT movies.id, movies.title, movies.year, movies.director, ratings.rating, movies.price " +
                     "FROM movies " +
                     "JOIN ratings ON movies.id = ratings.movieId " +
                     "JOIN genres_in_movies ON movies.id = genres_in_movies.movieId " +
@@ -87,6 +87,7 @@ public class BrowseResultsServlet extends HttpServlet {
                 String movie_year = topMovies.getString("year");
                 String movie_director = topMovies.getString("director");
                 String movie_rating = topMovies.getString("rating");
+                String movie_price = topMovies.getString("price");
 
                 // Retrieve 3 genres and 3 stars max for top movies
                 String movie_id = topMovies.getString("id");
@@ -105,6 +106,7 @@ public class BrowseResultsServlet extends HttpServlet {
                 jsonObject.addProperty("movie_director", movie_director);
                 jsonObject.addProperty("movie_rating", movie_rating);
                 jsonObject.addProperty("movie_id", movie_id);
+                jsonObject.addProperty("movie_price", movie_price);
 
 
                 int genre_count = 1;

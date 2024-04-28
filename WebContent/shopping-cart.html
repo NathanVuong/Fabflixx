@@ -26,7 +26,7 @@
 <body>
 <header class="d-flex flex-wrap justify-content-center py-3 border-bottom px-3">
     <div
-            class="d-flex align-items-center mb-md-0 me-md-auto link-body-emphasis text-decoration-none "
+            class="d-flex align-items-center mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
     >
         <svg class="bi me-2" width="40" height="32">
             <use xlink:href="#bootstrap"></use>
@@ -40,7 +40,7 @@
     </div>
     <ul class="nav nav-pills">
         <li class="nav-item">
-            <a href="#" class="nav-link active" aria-current="page">Home</a>
+            <a href="browsing.html" class="nav-link active" aria-current="page">Home</a>
         </li>
         <li class="nav-item sub-item">
             <a href="movie-list.html" class="nav-link">Top 20</a>
@@ -63,19 +63,29 @@
 </header>
 <div class="container">
     <div class="gradient-background my-4"><br></div>
-    <h1 id="movie_title"></h1>
-    </hr>
-    <h3 id="director_name"><strong>Director: </strong></h3>
-    <h3 id="genres_list"><strong>Genres: </strong></h3>
-    <h3 id="stars_list"><strong>Stars: </strong></h3>
-    <h3 id="rating_name"><strong>Rating: </strong></h3>
-    <h3 id="cart_add"><strong>Cart: </strong></h3>
+    <h1 class="mx-2">Checkout</h1>
 </div>
 
 
-
-
-<!-- Id "star_table" is useful for jQuery to find the html element with id, class here is mapping to Bootstrap defined class CSS -->
+<div class="container">
+    <!-- Id "star_table" is useful for jQuery to find the html element with id, class here is mapping to Bootstrap defined class CSS -->
+    <table id=shopping_list_table class="table table-striped">
+        <!-- Create a table header -->
+        <thead>
+        <tr>
+            <!-- Titles of each column-->
+            <th>Title</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <!-- Table body is left empty here, will be populated with the data retrieved with movie-list.js -->
+        <!-- Again, id "star_table_body" is useful for jQuery to find this html element -->
+        <tbody id=checkout_list_table_body></tbody>
+    </table>
+</div>
 
 
 <footer
@@ -107,8 +117,10 @@
 <!-- Note the url does not contain a "/" in the beginning, which means the url is relative to current path
      otherwise the url is relative to the root path-->
 <script src="handle-search.js"></script>
-<script src="shopping-cart-add.js"></script>
-<script src="single-movie.js"></script>
+<script src="shopping-cart.js"></script>
+
+
+
 </body>
 
 

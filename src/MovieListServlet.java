@@ -58,7 +58,7 @@ public class MovieListServlet extends HttpServlet {
 
 
             // Get top 20 movies
-            String queryTopMovies = "SELECT DISTINCT movies.id, movies.title, movies.year, movies.director, ratings.rating FROM movies JOIN ratings ON movies.id = ratings.movieId ORDER BY ratings.rating DESC LIMIT 20;";
+            String queryTopMovies = "SELECT DISTINCT movies.id, movies.title, movies.year, movies.director, ratings.rating, movies.price FROM movies JOIN ratings ON movies.id = ratings.movieId ORDER BY ratings.rating DESC LIMIT 20;";
             ResultSet topMovies = statementOne.executeQuery(queryTopMovies);
             JsonArray jsonArray = new JsonArray();
 
@@ -69,6 +69,7 @@ public class MovieListServlet extends HttpServlet {
                 String movie_year = topMovies.getString("year");
                 String movie_director = topMovies.getString("director");
                 String movie_rating = topMovies.getString("rating");
+                String movie_price = topMovies.getString("price");
 
 
                 // Retrieve 3 genres and 3 stars max for top movies
@@ -88,6 +89,7 @@ public class MovieListServlet extends HttpServlet {
                 jsonObject.addProperty("movie_director", movie_director);
                 jsonObject.addProperty("movie_rating", movie_rating);
                 jsonObject.addProperty("movie_id", movie_id);
+                jsonObject.addProperty("movie_price", movie_price);
 
 
                 int genre_count = 1;

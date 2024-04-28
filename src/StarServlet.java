@@ -65,7 +65,7 @@ public class StarServlet extends HttpServlet {
 
             // Construct a queries with parameters represented by "?"
             String queryStars = "SELECT DISTINCT stars.name, stars.birthYear FROM stars WHERE stars.id = ?;";
-            String queryMovies = "SELECT DISTINCT movies.id, movies.title, movies.director, movies.year FROM movies JOIN stars_in_movies ON stars_in_movies.movieId = movies.id WHERE stars_in_movies.starId = ?;";
+            String queryMovies = "SELECT DISTINCT movies.id, movies.title, movies.director, movies.year, movies.price FROM movies JOIN stars_in_movies ON stars_in_movies.movieId = movies.id WHERE stars_in_movies.starId = ?;";
 
 
             // Declare our statement
@@ -114,10 +114,12 @@ public class StarServlet extends HttpServlet {
                 String movie_id = rs.getString("id");
                 String movie_director = rs.getString("director");
                 String movie_year = rs.getString("year");
+                String movie_price = rs.getString("price");
                 jsonObjectTwo.addProperty("movie_" + Integer.toString(movieCount), movie);
                 jsonObjectTwo.addProperty("movie_id_" + Integer.toString(movieCount), movie_id);
                 jsonObjectTwo.addProperty("movie_director_" + Integer.toString(movieCount), movie_director);
                 jsonObjectTwo.addProperty("movie_year_" + Integer.toString(movieCount), movie_year);
+                jsonObjectTwo.addProperty("movie_price_" + Integer.toString(movieCount), movie_price);
                 movieCount++;
             }
             jsonObjectTwo.addProperty("movie_count", Integer.toString(movieCount));

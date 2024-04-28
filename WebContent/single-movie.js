@@ -23,17 +23,19 @@ function handleMovieResult(resultData) {
 
     // Populate the star table
     // Find the empty table body by id "star_table_body"
-    let movieTitleElement = jQuery("#movie_title")
-    let directorElement = jQuery("#director_name")
-    let genresElement = jQuery("#genres_list")
-    let starsElement = jQuery("#stars_list")
-    let ratingElement = jQuery("#rating_name")
+    let movieTitleElement = jQuery("#movie_title");
+    let directorElement = jQuery("#director_name");
+    let genresElement = jQuery("#genres_list");
+    let starsElement = jQuery("#stars_list");
+    let ratingElement = jQuery("#rating_name");
+    let cartAddElement = jQuery("#cart_add");
     // Concatenate the html tags with resultData jsonObject
     let titleHTML = "";
     let directorHTML = "";
     let genresHTML = "";
     let starsHTML = "";
     let ratingHTML = "";
+    let cartHTML = "";
     //title
     titleHTML += resultData[0]["movie_title"];
     //year
@@ -66,6 +68,8 @@ function handleMovieResult(resultData) {
     //rating
     ratingHTML += resultData[0]["movie_rating"];
 
+    cartHTML += "<button onclick=\"addItem('" + resultData[0]["movie_title"] + "', " + resultData[0]["movie_price"] + ")\">Add</button>";
+
 
     // Append the row created to the table body, which will refresh the page
     movieTitleElement.append(titleHTML);
@@ -73,6 +77,7 @@ function handleMovieResult(resultData) {
     genresElement.append(genresHTML);
     starsElement.append(starsHTML);
     ratingElement.append(ratingHTML);
+    cartAddElement.append(cartHTML);
 }
 
 

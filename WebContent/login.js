@@ -14,7 +14,7 @@ function handleLoginResult(resultDataString) {
     // If login succeeds, it will redirect the user to movie-list.html
     if (resultDataJson["status"] === "success") {
         // change back later
-        window.location.replace("index.html");
+        window.location.replace("browsing.html");
     } else {
         // If login fails, the web page will display 
         // error messages on <div> with id "login_error_message"

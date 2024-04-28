@@ -45,6 +45,9 @@
         <li class="nav-item sub-item">
             <a href="movie-list.html" class="nav-link">Top 20</a>
         </li>
+        <li class="nav-item sub-item">
+            <a href="shopping-cart.html" class="nav-link">Checkout</a>
+        </li>
     </ul>
     <form id="search-submit" class="form-inline d-flex flex-row my-2 my-lg-0">
         <input id="title" name="title" class="form-control mr-sm-2" type="search" placeholder="Title" aria-label="Search">
@@ -75,6 +78,7 @@
             <th>Movie Title</th>
             <th>Release Year</th>
             <th>Directors</th>
+            <th>Cart</th>
         </tr>
         </thead>
         <!-- Table body is left empty here, will be populated with the data retrieved with movie-list.js -->
@@ -115,6 +119,7 @@
 <!-- Note the url does not contain a "/" in the beginning, which means the url is relative to current path
      otherwise the url is relative to the root path-->
 <script src="handle-search.js"></script>
+<script src="shopping-cart-add.js"></script>
 <script src="single-star.js"></script>
 
 

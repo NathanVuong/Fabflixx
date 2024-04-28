@@ -38,10 +38,13 @@
     </div>
     <ul class="nav nav-pills">
         <li class="nav-item">
-            <a href="index.html" class="nav-link active" aria-current="page">Home</a>
+            <a href="browsing.html" class="nav-link active" aria-current="page">Home</a>
         </li>
         <li class="nav-item sub-item">
             <a href="movie-list.html" class="nav-link">Top 20</a>
+        </li>
+        <li class="nav-item sub-item">
+            <a href="shopping-cart.html" class="nav-link">Checkout</a>
         </li>
     </ul>
     <form id="search-submit" class="form-inline d-flex flex-row my-2 my-lg-0">
@@ -78,6 +81,7 @@
             <th>Star Two</th>
             <th>Star Three</th>
             <th>Rating</th>
+            <th>Cart</th>
         </tr>
         </thead>
         <!-- Table body is left empty here, will be populated with the data retrieved with index.js -->
@@ -114,6 +118,7 @@
 <!-- Note the url does not contain a "/" in the beginning, which means the url is relative to current path
      otherwise the url is relative to the root path-->
 <script src="handle-search.js"></script>
+<script src="shopping-cart-add.js"></script>
 <script src="search-result.js"></script>
 
 </body>

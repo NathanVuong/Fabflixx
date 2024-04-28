@@ -53,7 +53,7 @@ public class MovieServlet extends HttpServlet {
             JsonArray jsonArray = new JsonArray();
 
             // Construct a queries with parameters represented by "?"
-            String queryMovie = "SELECT DISTINCT movies.title, movies.director, movies.year FROM movies WHERE movies.id = ?";
+            String queryMovie = "SELECT DISTINCT movies.title, movies.director, movies.year, movies.price FROM movies WHERE movies.id = ?";
             String queryRating = "SELECT DISTINCT ratings.rating FROM ratings WHERE ratings.movieId = ?";
             String queryGenres = "SELECT DISTINCT genres.name, genres.id FROM genres JOIN genres_in_movies ON genres_in_movies.genreId = genres.id WHERE genres_in_movies.movieId = ?";
             String queryStars = "SELECT DISTINCT stars.name, stars.id FROM stars JOIN stars_in_movies ON stars_in_movies.starId = stars.id WHERE stars_in_movies.movieId = ?";
@@ -69,11 +69,13 @@ public class MovieServlet extends HttpServlet {
             String movie_title = "";
             String movie_director = "";
             String movie_year = "";
+            String movie_price = "";
 
             while (rs.next()) {
                 movie_title = rs.getString("title");
                 movie_director = rs.getString("director");
                 movie_year = rs.getString("year");
+                movie_price = rs.getString("price");
             }
 
             // Close it
@@ -97,6 +99,7 @@ public class MovieServlet extends HttpServlet {
             jsonObjectOne.addProperty("movie_director", movie_director);
             jsonObjectOne.addProperty("movie_year", movie_year);
             jsonObjectOne.addProperty("movie_rating", movie_rating);
+            jsonObjectOne.addProperty("movie_price", movie_price);
             jsonArray.add(jsonObjectOne);
 
             // Perform third query to get genres

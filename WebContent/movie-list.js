@@ -48,19 +48,16 @@ function handleMovieListResult(resultData) {
 
         //rating
         rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";
+        rowHTML += "<th><button onclick=\"addItem('" + resultData[i]["movie_title"] + "', " + resultData[i]["movie_price"] + ")\">Add</button></th>";
         rowHTML += "</tr>";
         // Append the row created to the table body, which will refresh the page
         starTableBodyElement.append(rowHTML);
     }
 }
 
-
-
-
 /*
 Once this .js is loaded, following scripts will be executed by the browser
 */
-
 
 // Makes the HTTP GET request and registers on success callback function handleStarResult
 jQuery.ajax({
