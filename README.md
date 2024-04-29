@@ -1,4 +1,4 @@
-Nathan Vuong: Implemented searching and browsing. Added shopping cart for the user so items in all areas could be added. Created HTMLS, JS, and Servlets for all feature. Did various debugging for many files.
+ncvuong: Implemented searching and browsing. Added shopping cart for the user so items in all areas could be added. Created HTMLS, JS, and Servlets for all feature. Did various debugging for many files.
 
 dfhuynh: Login functionality, worked on the searching implementation, ordering, page limits, pagination, extending P1 functionality, payment, filmed demo, did a bit for styling and helped with debugging on most other parts as well.
 
