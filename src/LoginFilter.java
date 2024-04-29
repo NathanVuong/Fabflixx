@@ -32,7 +32,20 @@ public class LoginFilter implements Filter {
 
         // Redirect to login page if the "user" attribute doesn't exist in session
         if (httpRequest.getSession().getAttribute("user") == null) {
-            httpResponse.sendRedirect("/cs122b_project1_war/login.html");
+            String url = httpRequest.getRequestURI();
+            String[] components = url.split("/");
+            if (url.contains("/api/")) {
+                components[components.length - 2] = "login.html";
+                StringBuilder urlBuilder = new StringBuilder();
+                for (int i = 0; i < components.length - 2; i++) {
+                    urlBuilder.append(components[i]).append("/");
+                }
+                urlBuilder.deleteCharAt(urlBuilder.length() - 1);
+                String finalUrl = urlBuilder.toString();
+                httpResponse.sendRedirect(finalUrl);
+            } else {
+                httpResponse.sendRedirect("login.html");
+            }
         } else {
             chain.doFilter(request, response);
         }
