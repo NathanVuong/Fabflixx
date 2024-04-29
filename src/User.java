@@ -8,10 +8,12 @@ import java.util.List;
 public class User {
 
     private final String username;
+    private final int userId;
     private final ShoppingCart shoppingCart;
 
-    public User(String username) {
+    public User(String username, int userId) {
         this.username = username;
+        this.userId = userId;
         this.shoppingCart = new ShoppingCart();
     }
 
@@ -19,6 +21,7 @@ public class User {
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
     }
+    public int getUserId() {return userId;}
 }
 
 // ShoppingCart class to keep track of items
@@ -62,7 +65,7 @@ class ShoppingCart {
 
     public void deleteItem(Item item) {
         for (Item existingItem : items) {
-            if (existingItem.getName().equals(item.getName())) {
+            if (existingItem.getMovieId().equals(item.getMovieId())) {
                 items.remove(existingItem);
                 return;
             }
@@ -77,18 +80,22 @@ class Item {
     private final int price;
     private int quantity;
     private int total;
+    private final String movieId;
 
-    public Item(String name, int price, int quantity) {
+    public Item(String name, int price, int quantity, String movieId) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.total = price * quantity;
+        this.movieId = movieId;
     }
 
     // Getter methods for name and price
     public String getName() {
         return name;
     }
+
+    public String getMovieId(){return this.movieId;}
 
     public int getPrice() {
         return price;

@@ -36,6 +36,7 @@ public class ShoppingCartServlet extends HttpServlet {
             jsonObject.addProperty("Title", item.getName());
             jsonObject.addProperty("Price", item.getPrice());
             jsonObject.addProperty("Quantity", item.getQuantity());
+            jsonObject.addProperty("MovieId", item.getMovieId());
             jsonObject.addProperty("Total", item.getTotal());
             jsonArray.add(jsonObject);
         }
@@ -49,13 +50,14 @@ public class ShoppingCartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String itemName = request.getParameter("title");
         String itemPriceString = request.getParameter("price");
+        String movieId = request.getParameter("movieId");
 
         if ("delete".equals(itemPriceString)) {
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("user");
 
             ShoppingCart shoppingCart = user.getShoppingCart();
-            Item item = new Item(itemName, 1, 1);
+            Item item = new Item(itemName, 1, 1, movieId);
             shoppingCart.deleteItem(item);
         }
         else {
@@ -67,7 +69,7 @@ public class ShoppingCartServlet extends HttpServlet {
                 User user = (User) session.getAttribute("user");
 
                 ShoppingCart shoppingCart = user.getShoppingCart();
-                Item item = new Item(itemName, itemPrice, 1);
+                Item item = new Item(itemName, itemPrice, 1, movieId);
                 shoppingCart.addItem(item);
             }
             else {
@@ -76,7 +78,7 @@ public class ShoppingCartServlet extends HttpServlet {
                 User user = (User) session.getAttribute("user");
 
                 ShoppingCart shoppingCart = user.getShoppingCart();
-                Item item = new Item(itemName, itemPrice, 1);
+                Item item = new Item(itemName, itemPrice, 1, movieId);
                 shoppingCart.subtractItem(item);
 
             }

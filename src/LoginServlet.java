@@ -53,8 +53,10 @@ public class LoginServlet extends HttpServlet {
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
             String passwordFromQuery = "";
+            int idFromQuery = 0;
             if (resultSet.next()) {
                 passwordFromQuery = resultSet.getString("password");
+                idFromQuery = resultSet.getInt("id");
             }
             resultSet.close();
             statement.close();
@@ -65,7 +67,7 @@ public class LoginServlet extends HttpServlet {
                 // Login success:
 
                 // set this user into the session
-                request.getSession().setAttribute("user", new User(username));
+                request.getSession().setAttribute("user", new User(username, idFromQuery));
 
                 responseJsonObject.addProperty("status", "success");
                 responseJsonObject.addProperty("message", "success");
