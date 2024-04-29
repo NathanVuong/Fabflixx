@@ -43,7 +43,7 @@ function handleStarResult(resultData) {
         rowHTML += "<th>" + resultData[1]["movie_year_" + i] + "</th>";
         //director
         rowHTML += "<th>" + resultData[1]["movie_director_" + i] + "</th>";
-        rowHTML += "<th><button onclick=\"addItem('" + resultData[1]["movie_" + i] + "', " + resultData[1]["movie_price_" + i] + ", '" + resultData[i]["movie_id"] + "')\">Add</button></th>";
+        rowHTML += "<th><button onclick=\"addItem('" + resultData[1]["movie_" + i] + "', " + resultData[1]["movie_price_" + i] + ", '" + resultData[1]["movie_id_" + i] + "')\">Add</button></th>";
     }
 
 

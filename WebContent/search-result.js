@@ -84,7 +84,10 @@ function handleSearchResult(resultData) {
                 rowHTML += "<th>" + "N/A" + "</th>";
             }
             else {
-                rowHTML += "<th>" + resultData[i]["movie_genre_" + j] + "</th>";
+                rowHTML += "<th>" +
+                    '<a href="browse-result.html?title=&genre=' + resultData[i]["movie_genre_" + j] + '&movie_number=25&order=tara&page=1">'
+                    + resultData[i]["movie_genre_" + j] +
+                    '</a>' + "</th>";
             }
         }
         //stars (same as with genres)
@@ -100,7 +103,11 @@ function handleSearchResult(resultData) {
             }
         }
         //rating
-        rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";
+        if (resultData[i]["movie_rating"] == null) {
+            rowHTML += "<th>" + "N/A" + "</th>";
+        } else {
+            rowHTML += "<th>" + resultData[i]["movie_rating"] + "</th>";
+        }
         rowHTML += "<th><button onclick=\"addItem('" + resultData[i]["movie_title"] + "', " + resultData[i]["movie_price"] + ", '" + resultData[i]["movie_id"] + "')\">Add</button></th>";
         rowHTML += "</tr>";
         // Append the row created to the table body, which will refresh the page

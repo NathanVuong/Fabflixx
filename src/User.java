@@ -75,6 +75,7 @@ class ShoppingCart {
 
     public void deleteItem(Item item) {
         for (Item existingItem : items) {
+            //System.out.println(existingItem.getMovieId() + " " + (item.getMovieId()));
             if (existingItem.getMovieId().equals(item.getMovieId())) {
                 items.remove(existingItem);
                 return;

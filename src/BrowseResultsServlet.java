@@ -66,7 +66,7 @@ public class BrowseResultsServlet extends HttpServlet {
             // Get top 20 movies
             String queryTopMovies = "SELECT DISTINCT movies.id, movies.title, movies.year, movies.director, ratings.rating, movies.price " +
                     "FROM movies " +
-                    "JOIN ratings ON movies.id = ratings.movieId " +
+                    "LEFT JOIN ratings ON movies.id = ratings.movieId " +
                     "JOIN genres_in_movies ON movies.id = genres_in_movies.movieId " +
                     "JOIN genres ON genres_in_movies.genreId = genres.id " +
                     "JOIN stars_in_movies ON movies.id = stars_in_movies.movieId " +

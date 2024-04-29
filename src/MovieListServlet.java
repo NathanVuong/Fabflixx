@@ -64,7 +64,7 @@ public class MovieListServlet extends HttpServlet {
 
 
             // Get top 20 movies
-            String queryTopMovies = "SELECT DISTINCT movies.id, movies.title, movies.year, movies.director, ratings.rating, movies.price FROM movies JOIN ratings ON movies.id = ratings.movieId ORDER BY ratings.rating DESC LIMIT 20;";
+            String queryTopMovies = "SELECT DISTINCT movies.id, movies.title, movies.year, movies.director, ratings.rating, movies.price FROM movies LEFT JOIN ratings ON movies.id = ratings.movieId ORDER BY ratings.rating DESC LIMIT 20;";
             ResultSet topMovies = statementOne.executeQuery(queryTopMovies);
             JsonArray jsonArray = new JsonArray();
 

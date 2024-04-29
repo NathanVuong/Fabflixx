@@ -19,8 +19,7 @@ function handleCartResult(resultData) {
         rowHTML += "<td><button onclick=\"modifyItem('" + currentItem["Title"] + "', -" + currentItem["Price"] + ", '" + currentItem["MovieId"] + "')\">-</button>" +
             currentItem["Quantity"] + "<button onclick=\"modifyItem('" + currentItem["Title"] + "', " + currentItem["Price"] + ", '" + currentItem["MovieId"] + "')\">+</button></td>";
         rowHTML += "<td>$" + currentItem["Total"] + "</td>";
-        rowHTML += "<td><button onclick=\"modifyItem('" + currentItem["Title"] + "', 'delete'" + ", '" + currentItem["MovieId"] + "')\">Delete</button></td>";
-
+        rowHTML += "<td><button onclick=\"modifyItem('" + currentItem["Title"] + "', 'delete', '" + currentItem["MovieId"] + "')\">Delete</button></td>";
         // Close the table row
         rowHTML += "</tr>";
 
@@ -48,10 +47,11 @@ function getCheckout() {
 }
 
 function modifyItem(title, price, movieId) {
+    //console.log(title + " " + price + " " + movieId);
     jQuery.ajax({
         dataType: "json", // Setting return data type
         method: "POST", // Setting request method
-        url: "api/shoppingCart?title=" + title + "&price=" + price + "&movieId" + movieId, // Setting request url, which is mapped by StarsServlet in Stars.java
+        url: "api/shoppingCart?title=" + title + "&price=" + price + "&movieId=" + movieId, // Setting request url, which is mapped by StarsServlet in Stars.java
         cache: false,
         success: function() {
             // Call getCheckout to update the page after the modification request is successful

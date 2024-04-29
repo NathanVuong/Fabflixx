@@ -54,7 +54,8 @@ public class ShoppingCartServlet extends HttpServlet {
         String itemName = request.getParameter("title");
         String itemPriceString = request.getParameter("price");
         String movieId = request.getParameter("movieId");
-        
+        //System.out.println(itemName + " " + itemPriceString + " " + movieId);
+
         if ("delete".equals(itemPriceString)) {
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("user");

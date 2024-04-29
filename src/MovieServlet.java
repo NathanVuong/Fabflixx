@@ -56,8 +56,8 @@ public class MovieServlet extends HttpServlet {
             String queryMovie = "SELECT DISTINCT movies.title, movies.director, movies.year, movies.price FROM movies WHERE movies.id = ?";
             String queryRating = "SELECT DISTINCT ratings.rating FROM ratings WHERE ratings.movieId = ?";
             String queryGenres = "SELECT DISTINCT genres.name, genres.id FROM genres JOIN genres_in_movies ON genres_in_movies.genreId = genres.id WHERE genres_in_movies.movieId = ? ORDER BY genres.name ASC";
-            String queryStars = "SELECT s.name, COUNT(sim.starId), m.id AS movieCount FROM movies m JOIN stars_in_movies sim ON m.id = " +
-                    "sim.movieId JOIN stars s ON sim.starId = s.id WHERE m.id = ? GROUP BY s.name ORDER BY movieCount DESC, s.name ASC;";
+            String queryStars = "SELECT DISTINCT s.name, s.id, COUNT(sim.starId) AS movieCount FROM movies m JOIN stars_in_movies sim ON m.id = " +
+                    "sim.movieId JOIN stars s ON sim.starId = s.id WHERE m.id = ? GROUP BY s.name, s.id ORDER BY movieCount DESC, s.name ASC;";
 
             // Declare our statement
             PreparedStatement statement = conn.prepareStatement(queryMovie);
