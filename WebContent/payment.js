@@ -7,16 +7,13 @@ let payment_form = $("#payment_form");
 function handlePaymentResult(resultDataString) {
     let resultDataJson = JSON.parse(resultDataString);
 
-    console.log("handle login response");
-    console.log(resultDataJson);
-    console.log(resultDataJson["status"]);
 
     // If login succeeds, it will redirect the user to movie-list.html
     if (resultDataJson["status"] === "success") {
         // change back later
-        console.log("stuff");
+        window.location.replace("confirmation.html");
     } else {
-
+        $("#payment_error_message").text("Invalid information. Re-enter payment information.");
     }
 }
 
@@ -42,6 +39,19 @@ function submitPaymentForm(formSubmitEvent) {
     );
 }
 
+function handleCostUpdate(resultData){
+    console.log(resultData["total_cost"])
+    $("#total-cost").html("Total Cost: " + resultData["total_cost"]);
+}
+
 // Bind the submit action of the form to a handler function
 payment_form.submit(submitPaymentForm);
+
+// Makes the HTTP GET request and registers on success callback function handleStarResult
+jQuery.ajax({
+    dataType: "json", // Setting return data type
+    method: "GET", // Setting request method
+    url: "api/payment",
+    success: handleCostUpdate // Setting callback function to handle data returned successfully by the StarsServlet
+});
 

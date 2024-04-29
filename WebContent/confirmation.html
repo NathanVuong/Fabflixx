@@ -42,44 +42,21 @@
         <li class="nav-item sub-item">
             <a href="movie-list.html" class="nav-link">Top 20</a>
         </li>
+        <li class="nav-item sub-item">
+            <a href="shopping-cart.html" class="nav-link">Checkout</a>
+        </li>
     </ul>
 </header>
 <div class="container">
     <div class="gradient-background my-4"><br></div>
-    <h1 class="mx-2">Payment Confirmation</h1>
+    <h1 class="mx-2">Your order has been placed!</h1>
 </div>
 <div class="container">
-    <!-- Set the method to POST to avoid showing the username/password in the URL
-        The default action is disabled to allow your own implementation. -->
-    <form class="mx-2" id="payment_form" method="post" action="#">
-        <label><b>First Name:</b></label>
-        <label>
-            <input name="first-name" placeholder="Enter First Name" type="text">
-        </label>
-        <br>
-        <label><b>Last Name:</b></label>
-        <label>
-            <input name="last-name" placeholder="Enter Last Name" type="text">
-        </label>
-        <br>
-        <label><b>Credit Card Number:</b></label>
-        <label>
-            <input name="credit-card" placeholder="Enter Credit Card" type="number">
-        </label>
-        <br>
-        <label><b>Expiration Date:</b></label>
-        <label>
-            <input name="date" placeholder="yyyy/mm/dd" type="date">
-        </label>
-        <br>
-        <br/>
-        <h5 id="total-cost"></h5>
-        <input type="submit" value="Confirm">
-    </form>
+    <button onclick="window.location.href='index.html';">Back to Browse</button>
 </div>
 <div class="container">
     <br>
-    <h3 class="mx-2" id="payment_error_message"></h3>
+    <h3 class="mx-2" id="login_error_message"></h3>
 </div>
 <br>
 <footer
@@ -106,7 +83,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!-- include our own JS file -->
-<script src="payment.js"></script>
+<script src="login.js"></script>
 
 </body>
 </html>

@@ -82,6 +82,10 @@ class ShoppingCart {
         }
     }
 
+    public void deleteAll(){
+        items.clear();
+    }
+
 }
 
 // Item class (example)
@@ -105,7 +109,7 @@ class Item {
         return name;
     }
 
-    public String getMovieId(){return this.movieId;}
+    public String getMovieId(){return movieId; }
 
     public int getPrice() {
         return price;

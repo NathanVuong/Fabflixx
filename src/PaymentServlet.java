@@ -40,13 +40,27 @@ public class PaymentServlet extends HttpServlet {
         }
     }
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        int total_cost = user.getShoppingCart().getTotalPrice();
+
+        System.out.println(total_cost);
+
+        // Output stream to STDOUT
+        PrintWriter out = response.getWriter();
+        JsonObject responseJsonObject = new JsonObject();
+        responseJsonObject.addProperty("total_cost", total_cost);
+        response.getWriter().write(responseJsonObject.toString());
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String firstName = request.getParameter("first-name");
         String lastName = request.getParameter("last-name");
         String creditCard = request.getParameter("credit-card");
         String date = request.getParameter("date");
 
-        System.out.println(firstName + " " + lastName + " " + creditCard + " " + date);
+        //System.out.println(firstName + " " + lastName + " " + creditCard + " " + date);
 
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
@@ -100,6 +114,7 @@ public class PaymentServlet extends HttpServlet {
                     forInsert.executeUpdate();
                     forInsert.close();
                 }
+                user.getShoppingCart().deleteAll();
             } else {
                 responseJsonObject.addProperty("status", "error");
                 System.out.println("failed");
