@@ -6,7 +6,7 @@ function handleCartResult(resultData) {
     starTableBodyElement.empty();
 
     // Iterate through resultData, no more than 10 entries
-    for (let i = 0; i < resultData.length; i++) {
+    for (let i = 1; i < resultData.length; i++) {
         // Concatenate the html tags with resultData jsonObject
         let currentItem = resultData[i];
 
@@ -26,6 +26,9 @@ function handleCartResult(resultData) {
 
         starTableBodyElement.append(rowHTML);
     }
+
+    let totalPriceLabel = document.getElementById("total_price");
+    totalPriceLabel.textContent = "Total Price: $" + resultData[0]["Total Price"];
 }
 
 jQuery.ajax({

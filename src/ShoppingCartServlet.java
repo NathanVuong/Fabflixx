@@ -29,9 +29,12 @@ public class ShoppingCartServlet extends HttpServlet {
 
         JsonArray jsonArray = new JsonArray();
         ShoppingCart shoppingCart = user.getShoppingCart();
+        JsonObject firstObject = new JsonObject();
+        firstObject.addProperty("Total Price", shoppingCart.getTotalPrice());
+        jsonArray.add(firstObject);
         List<Item> items = shoppingCart.getItems();
-        for (int i = 0; i < items.size(); i++) {
-            Item item = items.get(i);
+        for (int i = 1; i < items.size() + 1; i++) {
+            Item item = items.get(i - 1);
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("Title", item.getName());
             jsonObject.addProperty("Price", item.getPrice());

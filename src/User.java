@@ -27,13 +27,23 @@ public class User {
 // ShoppingCart class to keep track of items
 class ShoppingCart {
     private List<Item> items;
+    private int totalPrice;
 
     public ShoppingCart() {
         this.items = new ArrayList<>();
+        this.totalPrice = 0;
     }
 
     public List<Item> getItems() {
         return items;
+    }
+
+    public int getTotalPrice() {
+        int totalPrice = 0;
+        for (Item existingItem : items) {
+            totalPrice += existingItem.getPrice() * existingItem.getQuantity();
+        }
+        return totalPrice;
     }
 
     public void addItem(Item item) {
