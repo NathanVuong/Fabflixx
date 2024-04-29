@@ -5,4 +5,4 @@ dfhuynh: Login functionality, worked on the searching implementation, ordering, 
 Substring Design: The title, star, and director search fields will look for an instance of the substring entered anywhere in their respective sections. The year field does not support this, it will look for an exact match. Uses AND logic.
 
 P1 Demo: https://youtu.be/0wGPsqCshrc
-P2 Demo: 
+P2 Demo: https://youtu.be/Gq0kMFww_28?si=7J1Llh_UI6GzBlsv
