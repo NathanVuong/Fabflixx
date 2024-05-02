@@ -41,6 +41,21 @@ public class LoginServlet extends HttpServlet {
 
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
+
+        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+        try {
+            RecaptchaVerifyUtils.verify(gRecaptchaResponse);
+        } catch (Exception e) {
+            JsonObject responseJsonObject = new JsonObject();
+            // Login fail
+            responseJsonObject.addProperty("status", "fail");
+            // Log to localhost log
+            request.getServletContext().log("Captcha failed");
+            // sample error messages. in practice, it is not a good idea to tell user which one is incorrect/not exist.
+            responseJsonObject.addProperty("message", "Are you a robot?");
+            response.getWriter().write(responseJsonObject.toString());
+            return;
+        }
         
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
