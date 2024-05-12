@@ -33,6 +33,7 @@ function submitStarForm(formSubmitEvent) {
     $.ajax(
         "api/addStar", {
             method: "POST",
+            data: star_form.serialize(),
             success: handleAddStarResult
         }
     );

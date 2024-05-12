@@ -35,6 +35,8 @@ public class EmployeeLoginServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("doPost");
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 

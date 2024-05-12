@@ -40,8 +40,10 @@ public class AddStarServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String starName = request.getParameter("star-name");
-        String birthYear = request.getParameter("birth-year");
+        String birthYear = String.valueOf(request.getParameter("birth-year"));
         String newStarId = "";
+        System.out.println(starName);
+        System.out.println(birthYear);
 
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
@@ -58,24 +60,26 @@ public class AddStarServlet extends HttpServlet {
             while (rs.next()) {
                 newStarId = rs.getString("new_id");
             }
+            System.out.println(newStarId);
             rs.close();
             statementId.close();
 
-            if (birthYear == null) {
-                addStarQuery = "INSERT INTO stars (id, name) VALUES (?, ?);";
+            if (birthYear.isEmpty()) {
+                addStarQuery = "INSERT INTO stars (id, name) VALUES (?, ?)";
                 statement = conn.prepareStatement(addStarQuery);
                 statement.setString(1, newStarId);
                 statement.setString(2, starName);
             }
             else {
-                addStarQuery = "INSERT INTO stars (id, name, birthYear) VALUES (?, ?, ?);";
+                addStarQuery = "INSERT INTO stars (id, name, birthYear) VALUES (?, ?, ?)";
                 statement = conn.prepareStatement(addStarQuery);
                 statement.setString(1, newStarId);
                 statement.setString(2, starName);
                 statement.setString(3, birthYear);
             }
-
-            statement.executeQuery();
+            System.out.println("Before query");
+            int rowsAffected = statement.executeUpdate();
+            System.out.println("After query");
             statement.close();
 
             JsonObject responseJsonObject = new JsonObject();

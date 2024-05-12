@@ -30,6 +30,6 @@ Once this .js is loaded, following scripts will be executed by the browser
 jQuery.ajax({
     dataType: "json", // Setting return data type
     method: "GET", // Setting request method
-    url: "api/metadataServlet", // Setting request url, which is mapped by StarsServlet in Stars.java
+    url: "api/metadata", // Setting request url, which is mapped by StarsServlet in Stars.java
     success: (resultData) => handleMetadataResult(resultData) // Setting callback function to handle data returned successfully by the StarsServlet
 });

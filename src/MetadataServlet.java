@@ -76,7 +76,7 @@ public class MetadataServlet extends HttpServlet {
                 // Create a JsonObject based on the data we retrieve
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("table_name", table_name);
-                jsonObject.addProperty("atrribute_name", attribute_name);
+                jsonObject.addProperty("attribute_name", attribute_name);
                 jsonObject.addProperty("attribute_type", attribute_type);
 
                 jsonArray.add(jsonObject);

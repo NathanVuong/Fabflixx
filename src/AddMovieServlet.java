@@ -37,12 +37,18 @@ public class AddMovieServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String movieName = request.getParameter("movieName");
+        String movieName = request.getParameter("movie-name");
         String director = request.getParameter("director");
         String year = request.getParameter("movie-year");
         String genre = request.getParameter("genre");
         String starName = request.getParameter("star-name");
         String birthYear = request.getParameter("birth-year");
+        System.out.println(movieName);
+        System.out.println(director);
+        System.out.println(year);
+        System.out.println(genre);
+        System.out.println(starName);
+        System.out.println(birthYear);
 
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
@@ -53,7 +59,7 @@ public class AddMovieServlet extends HttpServlet {
         try (Connection conn = dataSource.getConnection()) {
             // Check if the movie already exists
             boolean movieExists = false;
-            try (PreparedStatement checkStatement = conn.prepareStatement("SELECT 1 FROM movies WHERE movies.name = ? AND movies.year = ? AND movies.director = ?")) {
+            try (PreparedStatement checkStatement = conn.prepareStatement("SELECT 1 FROM movies WHERE title = ? AND year = ? AND director = ?")) {
                 checkStatement.setString(1, movieName);
                 checkStatement.setString(2, year);
                 checkStatement.setString(3, director);
@@ -62,6 +68,7 @@ public class AddMovieServlet extends HttpServlet {
                         movieExists = true;
                     }
                 }
+
             }
 
             if (movieExists) {
@@ -69,27 +76,32 @@ public class AddMovieServlet extends HttpServlet {
                 responseJsonObject.addProperty("status", "failed");
             } else {
                 // Movie doesn't exist, proceed with the stored procedure call
-                try (CallableStatement statement = conn.prepareCall("{call add_movie(?, ?, ?, ?, ?, ?)}")) {
+                System.out.println("Before procedure call");
+                try (CallableStatement statement = conn.prepareCall("{call add_movie(?, ?, ?, ?, ?, ?, ?, ?, ?)}")) {
                     // Set the parameters for the stored procedure
+                    System.out.println("After procedure call");
                     statement.setString(1, movieName);
                     statement.setInt(2, Integer.parseInt(year));
                     statement.setString(3, director);
                     statement.setString(4, starName);
-                    if (birthYear != null && !birthYear.isEmpty()) {
+                    if (!birthYear.isEmpty()) {
                         statement.setInt(5, Integer.parseInt(birthYear));
                     } else {
                         statement.setNull(5, Types.INTEGER);
                     }
                     statement.setString(6, genre);
+                    System.out.println("Before register out params");
 
                     // Register output parameters
                     statement.registerOutParameter(7, Types.VARCHAR); // movie_id_out
+                    System.out.println("movie id out");
                     statement.registerOutParameter(8, Types.VARCHAR); // star_id_out
+                    System.out.println("star id out");
                     statement.registerOutParameter(9, Types.INTEGER); // genre_id_out
-
+                    System.out.println("Inside SP");
                     // Execute the stored procedure
                     statement.execute();
-
+                    System.out.println("Executed SP");
                     // Retrieve output parameters
                     String movieId = statement.getString(7);
                     String starId = statement.getString(8);

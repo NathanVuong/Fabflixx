@@ -32,6 +32,7 @@ function submitMovieForm(formSubmitEvent) {
     $.ajax(
         "api/addMovie", {
             method: "POST",
+            data: movie_form.serialize(),
             success: handleAddMovieResult
         }
     );
