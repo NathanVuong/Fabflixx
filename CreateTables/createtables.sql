@@ -70,3 +70,10 @@ CREATE TABLE ratings (
     FOREIGN KEY (movieId) REFERENCES movies(id)
 );
 
+CREATE TABLE employees (
+    email VARCHAR(50) PRIMARY KEY NOT NULL,
+    password VARCHAR(20) NOT NULL,
+    fullname VARCHAR(100)
+);
+
+// INSERT INTO employees VALUES("classta@email.edu", "classta", "TA CS122B");
