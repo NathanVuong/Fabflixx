@@ -15,6 +15,8 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.io.PrintWriter;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 @WebServlet(name = "LoginServlet", urlPatterns = "/api/login")
 public class LoginServlet extends HttpServlet {
     /**
@@ -69,16 +71,19 @@ public class LoginServlet extends HttpServlet {
             ResultSet resultSet = statement.executeQuery();
             String passwordFromQuery = "";
             int idFromQuery = 0;
+            boolean success = false;
             if (resultSet.next()) {
                 passwordFromQuery = resultSet.getString("password");
                 idFromQuery = resultSet.getInt("id");
+                success = new StrongPasswordEncryptor().checkPassword(password, passwordFromQuery);
+                System.out.println("this works");
             }
             resultSet.close();
             statement.close();
 
 
             JsonObject responseJsonObject = new JsonObject();
-            if (passwordFromQuery.equals(password) && !(passwordFromQuery.isEmpty())) {
+            if (success) {
                 // Login success:
 
                 // set this user into the session
