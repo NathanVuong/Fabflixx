@@ -11,7 +11,7 @@ function handleAddStarResult(resultDataString) {
     // If login succeeds, it will redirect the user to movie-list.html
     if (resultDataJson["status"] === "success") {
         // change back later
-        $("#status_message").text("Successfully added star!");
+        $("#status_message").text("Successfully added star! Star ID: " + resultDataJson["starId"]);
     } else {
         $("#status_message").text("Unable to add star...");
     }

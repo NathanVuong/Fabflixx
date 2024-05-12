@@ -80,6 +80,7 @@ public class AddStarServlet extends HttpServlet {
 
             JsonObject responseJsonObject = new JsonObject();
             responseJsonObject.addProperty("status", "success");
+            responseJsonObject.addProperty("starId", newStarId);
 
             response.getWriter().write(responseJsonObject.toString());
 

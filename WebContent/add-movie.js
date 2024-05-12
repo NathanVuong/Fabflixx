@@ -11,9 +11,9 @@ function handleAddMovieResult(resultDataString) {
     // If login succeeds, it will redirect the user to movie-list.html
     if (resultDataJson["status"] === "success") {
         // change back later
-        $("#status_message").text("Successfully added movie!");
+        $("#status_message").text("Successfully added movie! Movie ID: " + resultDataJson["movieId"] + " Genre ID: " + resultDataJson["genreId"] + " Star ID: " + resultDataJson["starId"]);
     } else {
-        $("#status_message").text("Unable to add movie...");
+        $("#status_message").text("Unable to add movie... Movie already exists?");
     }
 }
 

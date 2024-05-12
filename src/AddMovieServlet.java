@@ -82,8 +82,22 @@ public class AddMovieServlet extends HttpServlet {
                     }
                     statement.setString(6, genre);
 
+                    // Register output parameters
+                    statement.registerOutParameter(7, Types.VARCHAR); // movie_id_out
+                    statement.registerOutParameter(8, Types.VARCHAR); // star_id_out
+                    statement.registerOutParameter(9, Types.INTEGER); // genre_id_out
+
                     // Execute the stored procedure
                     statement.execute();
+
+                    // Retrieve output parameters
+                    String movieId = statement.getString(7);
+                    String starId = statement.getString(8);
+                    int genreId = statement.getInt(9);
+                    responseJsonObject.addProperty("status", "success");
+                    responseJsonObject.addProperty("movieId", movieId);
+                    responseJsonObject.addProperty("starId", starId);
+                    responseJsonObject.addProperty("genreId", String.valueOf(genreId));
                 }
             }
             response.getWriter().write(responseJsonObject.toString());
