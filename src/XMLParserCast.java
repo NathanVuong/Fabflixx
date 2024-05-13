@@ -88,6 +88,13 @@ public class XMLParserCast extends DefaultHandler {
         //iter = iter + 1;
 
         if (qName.equalsIgnoreCase("f")) {
+            if(tempVal.length() < 10) {
+                String toAdd = "";
+                for (int i = tempVal.length(); i < 10; i++) {
+                    toAdd = toAdd + "0";
+                }
+                tempVal = toAdd + tempVal;
+            }
             tempEmp.setMovidId(tempVal);
         } else if (qName.equalsIgnoreCase("a")) {
             tempEmp.addActor(tempVal);

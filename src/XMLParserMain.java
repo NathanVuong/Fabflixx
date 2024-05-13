@@ -98,6 +98,13 @@ public class XMLParserMain extends DefaultHandler {
             if (tempVal.isEmpty()) {
                 validMovie = false;
             }
+            if(tempVal.length() < 10) {
+                String toAdd = "";
+                for (int i = tempVal.length(); i < 10; i++) {
+                    toAdd = toAdd + "0";
+                }
+                tempVal = toAdd + tempVal;
+            }
             tempEmp.setId(tempVal);
         } else if (qName.equalsIgnoreCase("t")) {
             if (tempVal.isEmpty() || tempVal.equals("NKT")) {

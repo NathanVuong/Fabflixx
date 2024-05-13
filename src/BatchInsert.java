@@ -46,7 +46,7 @@ public class BatchInsert {
         int[] iNoRows=null;
 
         // Use for movie inserts
-        sqlInsertRecord="insert ignore into movies (id, title, year, director) values(?,?,?,?)";
+        sqlInsertRecord="insert ignore into movies (id, title, year, director, price) values(?,?,?,?,10)";
         try {
             conn.setAutoCommit(false);
 
