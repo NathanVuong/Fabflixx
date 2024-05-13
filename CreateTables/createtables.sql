@@ -25,7 +25,7 @@ CREATE TABLE stars_in_movies (
 
 CREATE TABLE genres (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    name VARCHAR(32) NOT NULL
+    name VARCHAR(32) UNIQUE NOT NULL
 );
 
 CREATE TABLE genres_in_movies (
