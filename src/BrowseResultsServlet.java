@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -143,13 +144,15 @@ public class BrowseResultsServlet extends HttpServlet {
 
                 // Retrieve 3 genres and 3 stars max for top movies
                 String movie_id = topMovies.getString("id");
-                Statement statementTwo = conn.createStatement();
-                String queryGenres = "SELECT genres.name FROM movies JOIN genres_in_movies ON genres_in_movies.movieId = movies.id JOIN genres ON genres.id = genres_in_movies.genreId WHERE movies.id = '" + movie_id + "' ORDER BY genres.name ASC LIMIT 3;";
-                ResultSet genres = statementTwo.executeQuery(queryGenres);
-                Statement statementThree = conn.createStatement();
-                String queryStars = "SELECT stars.name, stars.id FROM movies JOIN stars_in_movies ON stars_in_movies.movieId = movies.id JOIN stars ON stars.id = stars_in_movies.starId WHERE movies.id = '" + movie_id + "' ORDER BY stars.name ASC LIMIT 3;";
-                ResultSet stars = statementThree.executeQuery(queryStars);
-
+                //Statement statementTwo = conn.createStatement();
+                String queryGenres = "SELECT genres.name FROM movies JOIN genres_in_movies ON genres_in_movies.movieId = movies.id JOIN genres ON genres.id = genres_in_movies.genreId WHERE movies.id = ? ORDER BY genres.name ASC LIMIT 3;";
+                PreparedStatement statementTwo = conn.prepareStatement(queryGenres);
+                statementTwo.setString(1, movie_id);
+                ResultSet genres = statementTwo.executeQuery();
+                String queryStars = "SELECT stars.name, stars.id FROM movies JOIN stars_in_movies ON stars_in_movies.movieId = movies.id JOIN stars ON stars.id = stars_in_movies.starId WHERE movies.id = ? ORDER BY stars.name ASC LIMIT 3;";
+                PreparedStatement statementThree = conn.prepareStatement(queryStars);
+                statementThree.setString(1, movie_id);
+                ResultSet stars = statementThree.executeQuery();
 
                 // Create a JsonObject based on the data we retrieve
                 JsonObject jsonObject = new JsonObject();
