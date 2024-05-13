@@ -63,7 +63,6 @@ public class BrowseResultsServlet extends HttpServlet {
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
             // Declare our statement
-            Statement statementOne = conn.createStatement();
             // Get top 20 movies
             String queryTopMovies = "SELECT DISTINCT movies.id, movies.title, movies.year, movies.director, ratings.rating, movies.price " +
                     "FROM movies " +
@@ -115,22 +114,34 @@ public class BrowseResultsServlet extends HttpServlet {
             //this is to see if there is a next
             String offset_value_future = String.valueOf(Integer.parseInt(movieNumber) * (Integer.parseInt(page)));
 
-            String queryCheckFuture = queryTopMovies + " ORDER BY " + first_sort + " " + first_sort_order + ", " + second_sort +
-                    " " + second_sort_order + " LIMIT " + movieNumber + " OFFSET " + offset_value_future + ";";
-
-            queryTopMovies += " ORDER BY " + first_sort + " " + first_sort_order + ", " + second_sort +
-                    " " + second_sort_order + " LIMIT " + movieNumber + " OFFSET " + offset_value + ";";
+            String queryCheckFuture = queryTopMovies + " ORDER BY ? ?, ? ? LIMIT ? OFFSET ?;";
+            PreparedStatement statementOne = conn.prepareStatement(queryCheckFuture);
+            statementOne.setString(1, first_sort);
+            statementOne.setString(2, first_sort_order);
+            statementOne.setString(3, second_sort);
+            statementOne.setString(4, second_sort_order);
+            statementOne.setInt(5, Integer.parseInt(movieNumber));
+            statementOne.setInt(6, Integer.parseInt(offset_value_future));
 
             JsonObject jsonObject0 = new JsonObject();
 
-            ResultSet futureMovies = statementOne.executeQuery(queryCheckFuture);
+            ResultSet futureMovies = statementOne.executeQuery();
             if (!futureMovies.next()) {
                 jsonObject0.addProperty("future", "false");
             } else {
                 jsonObject0.addProperty("future", "true");
             }
 
-            ResultSet topMovies = statementOne.executeQuery(queryTopMovies);
+            queryTopMovies += " ORDER BY ? ?, ? ? LIMIT ? OFFSET ?;";
+            statementOne = conn.prepareStatement(queryTopMovies);
+            statementOne.setString(1, first_sort);
+            statementOne.setString(2, first_sort_order);
+            statementOne.setString(3, second_sort);
+            statementOne.setString(4, second_sort_order);
+            statementOne.setInt(5, Integer.parseInt(movieNumber));
+            statementOne.setInt(6, Integer.parseInt(offset_value));
+
+            ResultSet topMovies = statementOne.executeQuery();
             JsonArray jsonArray = new JsonArray();
             jsonArray.add(jsonObject0);
 
@@ -144,7 +155,6 @@ public class BrowseResultsServlet extends HttpServlet {
 
                 // Retrieve 3 genres and 3 stars max for top movies
                 String movie_id = topMovies.getString("id");
-                //Statement statementTwo = conn.createStatement();
                 String queryGenres = "SELECT genres.name FROM movies JOIN genres_in_movies ON genres_in_movies.movieId = movies.id JOIN genres ON genres.id = genres_in_movies.genreId WHERE movies.id = ? ORDER BY genres.name ASC LIMIT 3;";
                 PreparedStatement statementTwo = conn.prepareStatement(queryGenres);
                 statementTwo.setString(1, movie_id);
@@ -153,6 +163,7 @@ public class BrowseResultsServlet extends HttpServlet {
                 PreparedStatement statementThree = conn.prepareStatement(queryStars);
                 statementThree.setString(1, movie_id);
                 ResultSet stars = statementThree.executeQuery();
+
 
                 // Create a JsonObject based on the data we retrieve
                 JsonObject jsonObject = new JsonObject();
