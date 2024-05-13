@@ -19,6 +19,7 @@ public class BatchInsert {
         XMLParserActors spe2 = new XMLParserActors();
         spe2.runExample();
         List<Star> newStars = spe2.getNewStars();
+        //System.out.println(newStars.size());
 
         XMLParserCast spe3 = new XMLParserCast();
         spe3.runExample();
@@ -62,7 +63,18 @@ public class BatchInsert {
                 idToMovie.put(m.getId(), m.getTitle());
             }
 
+            int moviesInserted = 0;
+            int moviesDuplicated = 0;
             iNoRows=psInsertRecord.executeBatch();
+            for (int i = 0; i < iNoRows.length; i++) {
+                if (iNoRows[i] == 1) {
+                    moviesInserted++;
+                } else {
+                    moviesDuplicated++;
+                }
+            }
+            System.out.println("Inserted " + moviesInserted + " movies.");
+            System.out.println(moviesDuplicated + " movies duplicated.");
             conn.commit();
 
         } catch (SQLException e) {
@@ -85,6 +97,13 @@ public class BatchInsert {
             }
 
             iNoRows=psInsertRecord.executeBatch();
+            int genresInserted = 0;
+            for (int i = 0; i < iNoRows.length; i++) {
+                if (iNoRows[i] == 1) {
+                    genresInserted++;
+                }
+            }
+            System.out.println("Inserted " + genresInserted + " genres.");
             conn.commit();
 
         } catch (SQLException e) {
@@ -98,7 +117,7 @@ public class BatchInsert {
             PreparedStatement ps = conn.prepareStatement(getAllGenres);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
-                GenreMap.put(rs.getString("name"), rs.getInt("id"));
+                GenreMap.put(rs.getString("name").toLowerCase(), rs.getInt("id"));
             }
             rs.close();
             ps.close();
@@ -107,7 +126,7 @@ public class BatchInsert {
         }
 
         //System.out.println(GenreMap);
-        System.out.print("test");
+        //System.out.print("test");
 
 
         //Use for Genres in Movies
@@ -120,13 +139,21 @@ public class BatchInsert {
 
             for(Movie m: newMovies) {
                 for (String genre: m.getGenres()) {
-                    psInsertRecord.setInt(1, GenreMap.get(genre));
+                    //System.out.println(genre);
+                    psInsertRecord.setInt(1, GenreMap.get(genre.toLowerCase()));
                     psInsertRecord.setString(2, m.getId());
                     psInsertRecord.addBatch();
                 }
             }
 
             iNoRows=psInsertRecord.executeBatch();
+            int genresInMoviesInserted = 0;
+            for (int i = 0; i < iNoRows.length; i++) {
+                if (iNoRows[i] == 1) {
+                    genresInMoviesInserted++;
+                }
+            }
+            System.out.println("Inserted " + genresInMoviesInserted + " genres_in_movies.");
             conn.commit();
 
         } catch (SQLException e) {
@@ -155,6 +182,17 @@ public class BatchInsert {
             }
 
             iNoRows=psInsertRecord.executeBatch();
+            int starsInserted = 0;
+            int starsDuplicated = 0;
+            for (int i = 0; i < iNoRows.length; i++) {
+                if (iNoRows[i] == 1) {
+                    starsInserted++;
+                } else {
+                    starsDuplicated++;
+                }
+            }
+            System.out.println("Inserted " + starsInserted + " stars.");
+            System.out.println(starsDuplicated + " stars duplicated.");
             conn.commit();
 
         } catch (SQLException e) {
@@ -167,10 +205,17 @@ public class BatchInsert {
             conn.setAutoCommit(false);
 
             psInsertRecord=conn.prepareStatement(sqlInsertRecord);
-
+            int starMissing = 0;
+            int movieMissing = 0;
             for(Cast c: newCasts) {
                 for (String actor: c.getActors()) {
                     String starId = starToId.get(actor);
+                    if (starId == null) {
+                        starMissing++;
+                    }
+                    if (idToMovie.get(c.getMovidId()) == null){
+                        movieMissing++;
+                    }
                     if (!(starId == null) && !(idToMovie.get(c.getMovidId()) == null)){
                         psInsertRecord.setString(1, starId);
                         psInsertRecord.setString(2,c.getMovidId());
@@ -182,6 +227,15 @@ public class BatchInsert {
             }
 
             iNoRows=psInsertRecord.executeBatch();
+            int starsInMoviesInserted = 0;
+            for (int i = 0; i < iNoRows.length; i++) {
+                if (iNoRows[i] == 1) {
+                    starsInMoviesInserted++;
+                }
+            }
+            System.out.println("Inserted " + starsInMoviesInserted + " stars_in_movies.");
+            System.out.println(starMissing + " stars missing when doing cast.");
+            System.out.println(movieMissing + " movies missing when doing cast.");
             conn.commit();
 
         } catch (SQLException e) {

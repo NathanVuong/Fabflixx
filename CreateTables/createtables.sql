@@ -6,8 +6,7 @@ CREATE TABLE movies (
     id VARCHAR(10) PRIMARY KEY NOT NULL,
     title VARCHAR(100) NOT NULL,
     year INT NOT NULL,
-    director VARCHAR(100) NOT NULL,
-    price INT NULL
+    director VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE stars (
@@ -25,7 +24,7 @@ CREATE TABLE stars_in_movies (
 
 CREATE TABLE genres (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    name VARCHAR(32) NOT NULL
+    name VARCHAR(32) UNIQUE NOT NULL
 );
 
 CREATE TABLE genres_in_movies (
@@ -58,7 +57,6 @@ CREATE TABLE sales (
     customerId INT NOT NULL,
     movieId VARCHAR(10) NOT NULL,
     saleDate DATE NOT NULL,
-    quantity INT NOT NULL,
     FOREIGN KEY (customerId) REFERENCES customers(id),
     FOREIGN KEY (movieId) REFERENCES movies(id)
 );
@@ -75,5 +73,3 @@ CREATE TABLE employees (
     password VARCHAR(128) NOT NULL,
     fullname VARCHAR(100)
 );
-
-// INSERT INTO employees VALUES("classta@email.edu", "classta", "TA CS122B");

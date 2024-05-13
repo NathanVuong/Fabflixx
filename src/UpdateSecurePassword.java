@@ -40,6 +40,17 @@ public class UpdateSecurePassword {
         int alterResult2 = statement.executeUpdate(alterQuery2);
         System.out.println("altering employees table schema completed, " + alterResult + " rows affected");
 
+        //Add price
+        String alterQuery3 = "ALTER TABLE movies ADD COLUMN price INT";
+        int alterResult3 = statement.executeUpdate(alterQuery3);
+
+        String alterQuery35 = "UPDATE movies SET price = FLOOR(RAND() * 100) + 1";
+        int alterResult35 = statement.executeUpdate(alterQuery35);
+
+        //Add quantity
+        String alterQuery4 = "ALTER TABLE sales ADD COLUMN quantity INT;";
+        int alterResult4 = statement.executeUpdate(alterQuery4);
+
         // get the ID and password for each customer
         String query = "SELECT id, password from customers";
 
@@ -66,6 +77,14 @@ public class UpdateSecurePassword {
             updateQueryList.add(updateQuery);
         }
         rs.close();
+
+        // execute the update queries to update the password
+        System.out.println("updating password");
+        int count = 0;
+        for (String updateQuery : updateQueryList) {
+            int updateResult = statement.executeUpdate(updateQuery);
+            count += updateResult;
+        }
 
         String query2 = "SELECT email, password from employees";
 
@@ -94,7 +113,7 @@ public class UpdateSecurePassword {
 
         // execute the update queries to update the password
         System.out.println("updating password");
-        int count = 0;
+        count = 0;
         for (String updateQuery : updateEmployeeQueryList) {
             int updateResult = statement.executeUpdate(updateQuery);
             count += updateResult;

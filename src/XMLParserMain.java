@@ -23,6 +23,15 @@ public class XMLParserMain extends DefaultHandler {
 
     private String tempVal;
 
+    private int invalidCount = 0;
+    private int noIdCount = 0;
+    private int noTitleCount = 0;
+    private int noYearCount = 0;
+    private boolean inDirectorFilms = false;
+    private boolean inFilms = false;
+    private boolean inFilM = false;
+
+
     //to maintain context
     private Movie tempEmp;
     private String curDirector;
@@ -33,7 +42,7 @@ public class XMLParserMain extends DefaultHandler {
 
     public void runExample() {
         parseDocument();
-        //printData();
+        printData();
     }
 
     private void parseDocument() {
@@ -62,13 +71,10 @@ public class XMLParserMain extends DefaultHandler {
      * the contents
      */
     private void printData() {
-
-
-        Iterator<Movie> it = newMovies.iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next().toString());
-        }
-        System.out.println("No of Movies '" + newMovies.size() + "'.");
+        System.out.println(invalidCount + " movies inconsistent.");
+        System.out.println(noIdCount + " movies missing ids.");
+        System.out.println(noTitleCount + " movies missing titles.");
+        System.out.println(noYearCount + " movies missing years.");
     }
 
     public List<Movie> getNewMovies() {return newMovies;}
@@ -77,6 +83,16 @@ public class XMLParserMain extends DefaultHandler {
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         //reset
         tempVal = "";
+        if (qName.equalsIgnoreCase("directorfilms")) {
+            //System.out.println("directorfilms");
+            inDirectorFilms = true;
+        }
+        if (qName.equalsIgnoreCase("films")) {
+            if (inDirectorFilms) {
+                //System.out.println("films");
+                inFilms = true;
+            }
+        }
         if (qName.equalsIgnoreCase("film")) {
             tempEmp = new Movie();
             tempEmp.setDirector(curDirector);
@@ -93,10 +109,14 @@ public class XMLParserMain extends DefaultHandler {
         //iter = iter + 1;
 
         if (qName.equalsIgnoreCase("dirname")) {
+            if (tempVal.isEmpty()){
+                validMovie = false;
+            }
             curDirector = tempVal;
         } else if (qName.equalsIgnoreCase("fid")) {
             if (tempVal.isEmpty()) {
                 validMovie = false;
+                noIdCount++;
             }
             if(tempVal.length() < 10) {
                 String toAdd = "";
@@ -109,6 +129,7 @@ public class XMLParserMain extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("t")) {
             if (tempVal.isEmpty() || tempVal.equals("NKT")) {
                 validMovie = false;
+                noTitleCount++;
             }
             tempEmp.setTitle(tempVal);
         } else if (qName.equalsIgnoreCase("cat")) {
@@ -121,14 +142,25 @@ public class XMLParserMain extends DefaultHandler {
                 middle = Integer.parseInt(tempVal);
             } catch(NumberFormatException e) {
                 validMovie = false;
+                noYearCount++;
             } catch(NullPointerException e) {
+                validMovie = false;
+                noYearCount++;
+            }
+            if (middle < 1900 || middle > 2025){
                 validMovie = false;
             }
             tempEmp.setYear(middle);
         } else if (qName.equalsIgnoreCase("film")) {
-            if (validMovie) {
+            if (validMovie && inFilms) {
                 newMovies.add(tempEmp);
+            } else {
+                invalidCount += 1;
             }
+        } else if (qName.equalsIgnoreCase("directorfilms")) {
+            inDirectorFilms = false;
+        } else if (qName.equalsIgnoreCase("films")) {
+            inFilms = false;
         }
 
     }
