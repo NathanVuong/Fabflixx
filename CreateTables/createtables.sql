@@ -72,7 +72,7 @@ CREATE TABLE ratings (
 
 CREATE TABLE employees (
     email VARCHAR(50) PRIMARY KEY NOT NULL,
-    password VARCHAR(20) NOT NULL,
+    password VARCHAR(128) NOT NULL,
     fullname VARCHAR(100)
 );
 

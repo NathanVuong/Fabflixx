@@ -14,6 +14,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
+
 @WebServlet(name = "EmployeeLoginServlet", urlPatterns = "/api/employeeLogin")
 public class EmployeeLoginServlet extends HttpServlet {
     /**
@@ -70,15 +73,17 @@ public class EmployeeLoginServlet extends HttpServlet {
             ResultSet resultSet = statement.executeQuery();
             String passwordFromQuery = "";
             int idFromQuery = 0;
+            boolean success = false;
             if (resultSet.next()) {
                 passwordFromQuery = resultSet.getString("password");
+                success = new StrongPasswordEncryptor().checkPassword(password, passwordFromQuery);
             }
             resultSet.close();
             statement.close();
 
 
             JsonObject responseJsonObject = new JsonObject();
-            if (passwordFromQuery.equals(password) && !(passwordFromQuery.isEmpty())) {
+            if (success) {
                 // Login success:
 
                 // set this user into the session

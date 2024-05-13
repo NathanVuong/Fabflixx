@@ -106,7 +106,8 @@ public class BatchInsert {
             e.printStackTrace();
         }
 
-        System.out.println(GenreMap);
+        //System.out.println(GenreMap);
+        System.out.print("test");
 
 
         //Use for Genres in Movies
