@@ -6,3 +6,4 @@ Substring Design: The title, star, and director search fields will look for an i
 
 P1 Demo: https://youtu.be/0wGPsqCshrc
 P2 Demo: https://youtu.be/Gq0kMFww_28?si=7J1Llh_UI6GzBlsv
+P3 Demo: https://youtu.be/GL8H_La8fAY?si=SDCJC1K53-zEvEMu
