@@ -6,7 +6,7 @@ CREATE PROCEDURE add_movie (
     IN movie_director VARCHAR(100),
     IN star_name VARCHAR(100),
     IN star_birth_year INT,
-    IN genre_name VARCHAR(100),
+    IN genre_name VARCHAR(32),
     OUT movie_id_out VARCHAR(10),
     OUT star_id_out VARCHAR(10),
     OUT genre_id_out INT
