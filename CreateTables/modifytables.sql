@@ -9,3 +9,7 @@ ALTER TABLE sales
 ADD COLUMN quantity INT;
 UPDATE sales
 SET quantity = 1;
+
+ALTER TABLE movies
+MODIFY COLUMN title TEXT,
+ADD FULLTEXT (title);

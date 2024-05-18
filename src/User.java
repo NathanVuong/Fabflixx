@@ -11,6 +11,7 @@ public class User {
     private final int userId;
     private final ShoppingCart shoppingCart;
 
+
     public User(String username, int userId) {
         this.username = username;
         this.userId = userId;

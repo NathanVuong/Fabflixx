@@ -2,3 +2,4 @@
 *.iml
 target/
 CreateTables/data.sql
+WEB-INF

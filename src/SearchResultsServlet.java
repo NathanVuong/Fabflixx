@@ -50,6 +50,14 @@ public class SearchResultsServlet extends HttpServlet {
 
         String genre = request.getParameter("genre");
         String title = request.getParameter("title");
+        if (title != null && !title.isEmpty()) {
+            String[] titleTerms = title.split("\\s+");
+            StringBuilder fullTextQuery = new StringBuilder();
+            for (String term : titleTerms) {
+                fullTextQuery.append(term).append("* ");
+            }
+            title = fullTextQuery.toString().trim();
+        }
         String year = request.getParameter("year");
         String director = request.getParameter("director");
         String star = request.getParameter("star");
@@ -66,7 +74,6 @@ public class SearchResultsServlet extends HttpServlet {
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
             // Declare our statement
-            // Get top 20 movies
             String queryTopMovies = "SELECT DISTINCT movies.id, movies.title, movies.year, movies.director, ratings.rating, movies.price " +
                     "FROM movies " +
                     "LEFT JOIN ratings ON movies.id = ratings.movieId " +
@@ -75,21 +82,20 @@ public class SearchResultsServlet extends HttpServlet {
                     "JOIN stars_in_movies ON movies.id = stars_in_movies.movieId " +
                     "JOIN stars ON stars_in_movies.starId = stars.id " +
                     "WHERE 1=1";
-            request.getServletContext().log("getting results");
             if (genre != null && !genre.isEmpty()) {
-                queryTopMovies += " AND genres.name = '" + genre + "'";
+                queryTopMovies += " AND genres.name = ?";
             }
             if (title != null && !title.isEmpty()) {
-                queryTopMovies += " AND movies.title LIKE '%" + title + "%'";
+                queryTopMovies += " AND MATCH(title) AGAINST(? IN BOOLEAN MODE)";
             }
             if (year != null && !year.isEmpty()) {
-                queryTopMovies += " AND movies.year = '" + year + "'";
+                queryTopMovies += " AND movies.year = ?";
             }
             if (director != null && !director.isEmpty()) {
-                queryTopMovies += " AND movies.director LIKE '%" + director + "%'";
+                queryTopMovies += " AND movies.director LIKE ?";
             }
             if (star != null && !star.isEmpty()) {
-                queryTopMovies += " AND stars.name LIKE '%" + star + "%'";
+                queryTopMovies += " AND stars.name LIKE ?";
             }
 
             // Implement ordering and limiting
@@ -123,12 +129,31 @@ public class SearchResultsServlet extends HttpServlet {
 
             String queryCheckFuture = queryTopMovies + " ORDER BY ? ?, ? ? LIMIT ? OFFSET ?;";
             PreparedStatement statementOne = conn.prepareStatement(queryCheckFuture);
-            statementOne.setString(1, first_sort);
-            statementOne.setString(2, first_sort_order);
-            statementOne.setString(3, second_sort);
-            statementOne.setString(4, second_sort_order);
-            statementOne.setInt(5, Integer.parseInt(movieNumber));
-            statementOne.setInt(6, Integer.parseInt(offset_value_future));
+
+            int parameterIndex = 1;
+
+            if (genre != null && !genre.isEmpty()) {
+                statementOne.setString(parameterIndex++, genre);
+            }
+            if (title != null && !title.isEmpty()) {
+                statementOne.setString(parameterIndex++, title);
+            }
+            if (year != null && !year.isEmpty()) {
+                statementOne.setString(parameterIndex++, year);
+            }
+            if (director != null && !director.isEmpty()) {
+                statementOne.setString(parameterIndex++, "%" + director + "%");
+            }
+            if (star != null && !star.isEmpty()) {
+                statementOne.setString(parameterIndex++, "%" + star + "%");
+            }
+
+            statementOne.setString(parameterIndex++, first_sort);
+            statementOne.setString(parameterIndex++, first_sort_order);
+            statementOne.setString(parameterIndex++, second_sort);
+            statementOne.setString(parameterIndex++, second_sort_order);
+            statementOne.setInt(parameterIndex++, Integer.parseInt(movieNumber));
+            statementOne.setInt(parameterIndex, Integer.parseInt(offset_value_future));
 
             JsonObject jsonObject0 = new JsonObject();
 
@@ -141,12 +166,31 @@ public class SearchResultsServlet extends HttpServlet {
 
             queryTopMovies += " ORDER BY ? ?, ? ? LIMIT ? OFFSET ?;";
             statementOne = conn.prepareStatement(queryTopMovies);
-            statementOne.setString(1, first_sort);
-            statementOne.setString(2, first_sort_order);
-            statementOne.setString(3, second_sort);
-            statementOne.setString(4, second_sort_order);
-            statementOne.setInt(5, Integer.parseInt(movieNumber));
-            statementOne.setInt(6, Integer.parseInt(offset_value));
+
+            parameterIndex = 1;
+
+            if (genre != null && !genre.isEmpty()) {
+                statementOne.setString(parameterIndex++, genre);
+            }
+            if (title != null && !title.isEmpty()) {
+                statementOne.setString(parameterIndex++, "%" + title + "%");
+            }
+            if (year != null && !year.isEmpty()) {
+                statementOne.setString(parameterIndex++, year);
+            }
+            if (director != null && !director.isEmpty()) {
+                statementOne.setString(parameterIndex++, "%" + director + "%");
+            }
+            if (star != null && !star.isEmpty()) {
+                statementOne.setString(parameterIndex++, "%" + star + "%");
+            }
+
+            statementOne.setString(parameterIndex++, first_sort);
+            statementOne.setString(parameterIndex++, first_sort_order);
+            statementOne.setString(parameterIndex++, second_sort);
+            statementOne.setString(parameterIndex++, second_sort_order);
+            statementOne.setInt(parameterIndex++, Integer.parseInt(movieNumber));
+            statementOne.setInt(parameterIndex, Integer.parseInt(offset_value));
 
             ResultSet topMovies = statementOne.executeQuery();
 

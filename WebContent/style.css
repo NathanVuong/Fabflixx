@@ -72,3 +72,35 @@ p{
 #year{
     width: 90px;
 }
+
+#title {
+    background-color: white; /* Set the background color to white */
+    border: 1px solid #ccc; /* Add border */
+    padding: 5px; /* Add padding */
+    width: 200px; /* Set width as needed */
+}
+
+#title:focus {
+    outline: none; /* Remove default focus outline */
+    border-color: blue; /* Change border color on focus */
+}
+
+/* Style for the suggestions container */
+.autocomplete-suggestions {
+    background-color: white; /* White background for the dropdown */
+    border: 1px solid #ccc; /* Optional: Add a border */
+    max-height: 200px; /* Optional: Set max height for the dropdown */
+    overflow-y: auto; /* Optional: Add vertical scroll if needed */
+    z-index: 9999; /* Ensure it appears above other elements */
+}
+
+/* Style for individual suggestions */
+.autocomplete-suggestion {
+    padding: 10px; /* Add some padding */
+    cursor: pointer; /* Change cursor to pointer */
+}
+
+/* Highlight style for the selected suggestion */
+.autocomplete-suggestion.autocomplete-selected {
+    background-color: #f0f0f0; /* Light grey background for selected item */
+}
