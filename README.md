@@ -3,7 +3,7 @@
     
     - #### Names: Darren Huynh, Nathan Vuong
     
-    - #### Project 4 Video Demo Link: https://youtu.be/_YPRurNd5Yw?si=DBhgCtr7M24xR6LS
+    - #### Project 4 Video Demo Link: https://youtu.be/f31bMa4CS1g?si=zPfzlO6MDuErk44G
 
     - #### Instruction of deployment: The links of the deployed sites are on the spreadsheet.
 
