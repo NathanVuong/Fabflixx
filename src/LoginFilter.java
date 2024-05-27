@@ -43,8 +43,8 @@ public class LoginFilter implements Filter {
                 urlBuilder.deleteCharAt(urlBuilder.length() - 1);
                 String finalUrl = urlBuilder.toString();
                 httpResponse.sendRedirect(finalUrl);
-            } else {
-                httpResponse.sendRedirect("cs122b-project1/login.html");
+            } else{
+                httpResponse.sendRedirect("/cs122b_project1_war/login.html");
             }
         } else {
             chain.doFilter(request, response);
