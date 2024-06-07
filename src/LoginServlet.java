@@ -68,33 +68,28 @@ public class LoginServlet extends HttpServlet {
             // Get username and password from database
 
             // Get password given username
+            // Get password given username
             String queryUsername = "SELECT DISTINCT customers.password, customers.id FROM customers WHERE customers.email = ?;";
             PreparedStatement statement = conn.prepareStatement(queryUsername);
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
             String passwordFromQuery = "";
-            int idFromQuery = 0;
-            boolean success = false;
             if (resultSet.next()) {
                 passwordFromQuery = resultSet.getString("password");
-                idFromQuery = resultSet.getInt("id");
-                success = new StrongPasswordEncryptor().checkPassword(password, passwordFromQuery);
-                System.out.println("this works");
             }
             resultSet.close();
             statement.close();
 
 
             JsonObject responseJsonObject = new JsonObject();
-            if (success) {
+            if (passwordFromQuery.equals(password) && !(passwordFromQuery.isEmpty())) {
                 // Login success:
 
                 // set this user into the session
-                request.getSession().setAttribute("user", new User(username, idFromQuery));
+                request.getSession().setAttribute("user", new User(username));
 
                 responseJsonObject.addProperty("status", "success");
                 responseJsonObject.addProperty("message", "success");
-
             } else {
                 // Login fail
                 responseJsonObject.addProperty("status", "fail");
