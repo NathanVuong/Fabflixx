@@ -73,6 +73,7 @@ public class EmployeeLoginServlet extends HttpServlet {
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
             String passwordFromQuery = "";
+            int idFromQuery = 0;
             if (resultSet.next()) {
                 passwordFromQuery = resultSet.getString("password");
             }
