@@ -74,8 +74,10 @@ public class LoginServlet extends HttpServlet {
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
             String passwordFromQuery = "";
+            int idFromQuery = 0;
             if (resultSet.next()) {
                 passwordFromQuery = resultSet.getString("password");
+                idFromQuery = resultSet.getInt("id");
             }
             resultSet.close();
             statement.close();
