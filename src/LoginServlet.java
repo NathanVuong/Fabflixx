@@ -88,7 +88,7 @@ public class LoginServlet extends HttpServlet {
                 // Login success:
 
                 // set this user into the session
-                request.getSession().setAttribute("user", new User(username));
+                request.getSession().setAttribute("user", new User(username, idFromQuery));
 
                 responseJsonObject.addProperty("status", "success");
                 responseJsonObject.addProperty("message", "success");
