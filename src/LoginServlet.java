@@ -44,6 +44,7 @@ public class LoginServlet extends HttpServlet {
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
 
+        /*
         String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
         try {
             RecaptchaVerifyUtils.verify(gRecaptchaResponse);
@@ -58,6 +59,8 @@ public class LoginServlet extends HttpServlet {
             response.getWriter().write(responseJsonObject.toString());
             return;
         }
+        */
+
         
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
