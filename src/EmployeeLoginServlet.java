@@ -45,7 +45,7 @@ public class EmployeeLoginServlet extends HttpServlet {
 
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
-
+        /*
         String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
         try {
             RecaptchaVerifyUtils.verify(gRecaptchaResponse);
@@ -60,6 +60,7 @@ public class EmployeeLoginServlet extends HttpServlet {
             response.getWriter().write(responseJsonObject.toString());
             return;
         }
+        */
         
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
@@ -72,18 +73,15 @@ public class EmployeeLoginServlet extends HttpServlet {
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
             String passwordFromQuery = "";
-            int idFromQuery = 0;
-            boolean success = false;
             if (resultSet.next()) {
                 passwordFromQuery = resultSet.getString("password");
-                success = new StrongPasswordEncryptor().checkPassword(password, passwordFromQuery);
             }
             resultSet.close();
             statement.close();
 
 
             JsonObject responseJsonObject = new JsonObject();
-            if (success) {
+            if (passwordFromQuery.equals(password) && !(passwordFromQuery.isEmpty())) {
                 // Login success:
 
                 // set this user into the session
