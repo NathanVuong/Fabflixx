@@ -44,7 +44,7 @@ public class LoginFilter implements Filter {
                 String finalUrl = urlBuilder.toString();
                 httpResponse.sendRedirect(finalUrl);
             } else{
-                httpResponse.sendRedirect("/cs122b_project1/login.html");
+                httpResponse.sendRedirect("/cs122b-project1/login.html");
             }
         } else {
             chain.doFilter(request, response);
